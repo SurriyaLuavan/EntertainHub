@@ -39,9 +39,9 @@ const SearchResults = ({ searchValue }) => {
           searchFilter.length <= 2 && "alignSearch"
         } | padding-inline padding-block-top padding-block-bottom`}
       >
-        {/* {searchFilter.map((item) => (
+        {searchFilter.map((item) => (
           <ShowCard show={item} key={uuid()} />
-        ))} */}
+        ))}
       </div>
     </section>
   );
