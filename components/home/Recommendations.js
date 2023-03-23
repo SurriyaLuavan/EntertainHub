@@ -7,7 +7,7 @@ const Recommendations = () => {
   const recommendCollection = data.filter((item) => !item.isTrending);
 
   return (
-    <article>
+    <section>
       <h1 className="padding-inline fs-l-primary-heading fw-light">
         Recommended for you
       </h1>
@@ -16,7 +16,7 @@ const Recommendations = () => {
           <ShowCard show={item} key={uuid()} />
         ))}
       </div>
-    </article>
+    </section>
   );
 };
 
