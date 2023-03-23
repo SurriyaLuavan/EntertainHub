@@ -13,8 +13,10 @@ export default function Home() {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <Layout>
-        <Trending />
-        <Recommendations />
+        <div className="showListContainer ">
+          <Trending />
+          <Recommendations />
+        </div>
       </Layout>
     </>
   );
