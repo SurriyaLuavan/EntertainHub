@@ -1,5 +1,5 @@
 const Trending = () => {
-  return <div>Enter</div>;
+  return <div></div>;
 };
 
 export default Trending;

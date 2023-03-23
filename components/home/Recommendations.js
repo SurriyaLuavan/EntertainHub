@@ -1,5 +1,5 @@
 const Recommendations = () => {
-  return <div>Enter</div>;
+  return <div>Hi</div>;
 };
 
 export default Recommendations;

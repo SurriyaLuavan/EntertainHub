@@ -1,4 +1,7 @@
 import Head from "next/head";
+import Layout from "@/components/layout/Layout";
+import Trending from "@/components/home/Trending";
+import Recommendations from "@/components/home/Recommendations";
 
 export default function Home() {
   return (
@@ -9,7 +12,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
-      <main></main>
+      <main>
+        <Layout>
+          <Trending />
+          <Recommendations />
+        </Layout>
+      </main>
     </>
   );
 }
