@@ -8,7 +8,7 @@ const Trending = () => {
   const trendingCollection = data.filter((item) => item.isTrending);
 
   return (
-    <article>
+    <section>
       <h1 className="padding-inline fs-l-primary-heading fw-light">Trending</h1>
       <ScrollContainer
         vertical={false}
@@ -19,7 +19,7 @@ const Trending = () => {
           <ShowCard show={item} key={uuid()} container="trending" />
         ))}
       </ScrollContainer>
-    </article>
+    </section>
   );
 };
 
