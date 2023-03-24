@@ -2,29 +2,46 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "/styles/FormField.module.css";
 import AuthLayout from "@/components/AuthLayout";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { useState } from "react";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeat, setRepeat] = useState("");
-  const [valid, setValid] = useState({
+  const [focus, setFocus] = useState({
     email: true,
     password: true,
-    repeat: true,
+    confirm: true,
   });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    let currentStatus = {};
-
-    Object.keys(valid).forEach((item) => {
-      if (item === "") {
-        currentStatus = { ...currentStatus, item: false };
-      }
+  function handleFocus(e) {
+    setFocus((prev) => {
+      return { ...prev, [e.target.name]: true };
     });
   }
+
+  function handleBlur(e) {
+    setFocus((prev) => {
+      return { ...prev, [e.target.name]: false };
+    });
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirm: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required").min(8, "Min. 8 characters"),
+      confirm: Yup.string()
+        .required("Required")
+        .oneOf([Yup.ref("password"), null], "Password must match"),
+    }),
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
     <>
@@ -35,70 +52,73 @@ export default function Signup() {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
 
-      <AuthLayout type="Sign Up" onSubmit={handleSubmit}>
-        <div className={styles.inputFieldContainer}>
+      <AuthLayout type="Sign Up" onSubmit={formik.handleSubmit}>
+        <label htmlFor="email" className={styles.inputFieldContainer}>
           <input
             type="email"
-            name="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onFocus={() => setValid({ email: true, password: true })}
+            name="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             className={`${styles.inputField} | ${styles.fsInput} ${
-              !valid && styles.errorField
+              formik.errors.email && !focus.email && styles.errorField
             } bg-primary-600 text-neutral-100 fw-light`}
             placeholder="Email address"
           />
-          {!valid.email && (
-            <span
+          {formik.errors.email && !focus.email ? (
+            <div
               className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
             >
-              Invalid email ID
-            </span>
-          )}
-        </div>
-        <div className={styles.inputFieldContainer}>
+              {formik.errors.email}
+            </div>
+          ) : null}
+        </label>
+        <label htmlFor="password" className={styles.inputFieldContainer}>
           <input
             type="password"
-            name="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onFocus={() => setValid({ email: true, password: true })}
+            name="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             className={`${styles.inputField}  | ${styles.fsInput} ${
-              !valid.password && styles.errorField
+              !focus.password && formik.errors.password && styles.errorField
             } bg-primary-600 text-neutral-100 fw-light`}
             placeholder="Password"
           />
-          {!valid.email && (
-            <span
+          {!focus.password && formik.errors.password ? (
+            <div
               className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
             >
-              Invalid email ID
-            </span>
-          )}
-        </div>
-        <div className={styles.inputFieldContainer}>
+              {formik.errors.password}
+            </div>
+          ) : null}
+        </label>
+        <label htmlFor="confirm" className={styles.inputFieldContainer}>
           <input
             type="password"
-            name="password-repeat"
-            id="password-repeat"
-            value={repeat}
-            onChange={(e) => setPassword(e.target.value)}
-            onFocus={() => setValid({ email: true, password: true })}
+            id="confirm"
+            name="confirm"
+            onChange={formik.handleChange}
+            value={formik.values.confirm}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             className={`${styles.inputField}  | ${styles.fsInput} ${
-              !valid.password && styles.errorField
+              !focus.confirm && formik.errors.confirm && styles.errorField
             } bg-primary-600 text-neutral-100 fw-light`}
             placeholder="Repeat password"
           />
-          {!valid.email && (
+          {!focus.confirm && formik.errors.confirm && (
             <span
               className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
             >
-              Invalid email ID
+              {formik.errors.confirm}
             </span>
           )}
-        </div>
+        </label>
         <button
           type="submit"
           className={`${styles.submitButton} | ${styles.fsInput} fw-light`}

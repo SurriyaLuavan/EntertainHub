@@ -57,18 +57,18 @@
 }
 
 .fsError {
-  font-size: var(--fs-200);
+  font-size: var(--fs-100);
 }
 
 @media (min-width: 40em) and (max-width: 60em) {
   .fsError {
-    font-size: var(--fs-300);
+    font-size: var(--fs-200);
   }
 }
 
 @media (min-width: 60em) {
   .fsError {
-    font-size: var(--fs-300);
+    font-size: var(--fs-200);
   }
 }
 
