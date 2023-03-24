@@ -8,6 +8,7 @@ const NavBar = () => {
   const router = useRouter();
   const pathName = router.pathname;
   const [showAccount, setShowAccount] = useState(false);
+
   return (
     <section className={`${styles.headerContainer} | bg-primary-600  `}>
       <Link href="/" data-tab="home">
