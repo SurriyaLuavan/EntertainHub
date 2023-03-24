@@ -1,4 +1,7 @@
 import Head from "next/head";
+import Layout from "@/components/layout/Layout";
+import BookmarkMovies from "@/components/bookmarks/BookmarkMovies";
+import BookmarkSeries from "@/components/bookmarks/BookmarkSeries";
 
 export default function Bookmarks() {
   return (
@@ -9,7 +12,12 @@ export default function Bookmarks() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
-      <main></main>
+      <Layout>
+        <div className="showListContainer">
+          <BookmarkMovies />
+          <BookmarkSeries />
+        </div>
+      </Layout>
     </>
   );
 }
