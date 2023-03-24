@@ -1,26 +1,55 @@
+import AuthLayout from "@/components/AuthLayout";
+import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
-import styles from "/styles/AuthPage.module.css";
+import styles from "/styles/FormField.module.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [valid, setValid] = useState({ email: true, password: true });
+  const [focus, setFocus] = useState({
+    email: true,
+    password: true,
+  });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (email === "" && password === "") {
-      setValid({ email: false, password: false });
-    } else if (password === "") {
-      setValid({ ...valid, password: false });
-    } else if (email === "") {
-      setValid({ ...valid, email: false });
-    } else {
-      setValid({ email: true, password: true });
-    }
+  function resetFocus() {
+    Object.keys(focus).forEach((item) => {
+      setFocus((prev) => {
+        return { ...prev, [item]: false };
+      });
+    });
   }
+
+  function handleSubmit(values) {
+    resetFocus();
+    formik.handleSubmit(values);
+  }
+
+  function handleFocus(e) {
+    setFocus((prev) => {
+      return { ...prev, [e.target.name]: true };
+    });
+  }
+
+  function handleBlur(e) {
+    setFocus((prev) => {
+      return { ...prev, [e.target.name]: false };
+    });
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+    }),
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
     <>
@@ -30,76 +59,64 @@ export default function Login() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
-      <main className={styles.loginContainer}>
-        <Link className={styles.logo} href="/" data-tab="home">
-          <svg width="33" height="27" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="m26.463.408 3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-1.6a3.186 3.186 0 0 0-3.184 3.2l-.016 19.2a3.2 3.2 0 0 0 3.2 3.2h25.6a3.2 3.2 0 0 0 3.2-3.2V.408h-6.4Z"
-              fill="#FC4747"
-            />
-          </svg>
-        </Link>
-        <form
-          className={`${styles.formContainer} bg-primary-600`}
-          onSubmit={handleSubmit}
+      <AuthLayout type="Login" onSubmit={handleSubmit}>
+        <label htmlFor="email" className={styles.inputFieldContainer}>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            className={`${styles.inputField} | ${styles.fsInput} ${
+              formik.errors.email && !focus.email && styles.errorField
+            } bg-primary-600 text-neutral-100 fw-light`}
+            placeholder="Email address"
+          />
+          {formik.errors.email && !focus.email ? (
+            <div
+              className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
+            >
+              {formik.errors.email}
+            </div>
+          ) : null}
+        </label>
+        <label htmlFor="password" className={styles.inputFieldContainer}>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            className={`${styles.inputField}  | ${styles.fsInput} ${
+              !focus.password && formik.errors.password && styles.errorField
+            } bg-primary-600 text-neutral-100 fw-light`}
+            placeholder="Password"
+          />
+          {!focus.password && formik.errors.password ? (
+            <div
+              className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
+            >
+              {formik.errors.password}
+            </div>
+          ) : null}
+        </label>
+        <button
+          type="submit"
+          className={`${styles.submitButton} | ${styles.fsInput} fw-light`}
         >
-          <h1 className={`${styles.fsHeading} fw-light`}>Login</h1>
-          <div className={styles.inputFieldContainer}>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onFocus={() => setValid({ email: true, password: true })}
-              className={`${styles.inputField} | ${styles.fsInput} ${
-                !valid && styles.errorField
-              } bg-primary-600 text-neutral-100 fw-light`}
-              placeholder="Email address"
-            />
-            {!valid.email && (
-              <span
-                className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
-              >
-                Invalid email ID
-              </span>
-            )}
-          </div>
-          <div className={styles.inputFieldContainer}>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onFocus={() => setValid({ email: true, password: true })}
-              className={`${styles.inputField}  | ${styles.fsInput} ${
-                !valid.password && styles.errorField
-              } bg-primary-600 text-neutral-100 fw-light`}
-              placeholder="Password"
-            />
-            {!valid.password && (
-              <span
-                className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
-              >
-                Can&apos;t be empty
-              </span>
-            )}
-          </div>
-          <button
-            type="submit"
-            className={`${styles.submitButton} | ${styles.fsInput} fw-light`}
-          >
-            Login to your account
-          </button>
-          <p className={`${styles.fsInput} ${styles.para} fw-light`}>
-            Don&apos;t have an account?{" "}
-            <Link className="text-accent" href="/sign-up">
-              Sign Up
-            </Link>
-          </p>
-        </form>
-      </main>
+          Login to your account
+        </button>
+        <p className={`${styles.fsInput} ${styles.para} fw-light`}>
+          Don&apos;t have an account?{" "}
+          <Link className="text-accent" href="/sign-up">
+            Sign Up
+          </Link>
+        </p>
+      </AuthLayout>
     </>
   );
 }

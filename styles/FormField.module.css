@@ -1,30 +1,3 @@
-.loginContainer {
-  display: grid;
-  grid-auto-rows: 15vh 1fr;
-  padding: 1.5rem;
-  gap: 1rem;
-  align-items: start;
-}
-
-.logo {
-  place-self: center;
-}
-
-.formContainer {
-  position: relative;
-  display: grid;
-  padding: 1.5rem;
-  gap: 1.5rem;
-  border-radius: 10px;
-  width: min(98%, 400px);
-  place-items: center;
-  place-self: center;
-}
-
-.formContainer > * {
-  width: 100%;
-}
-
 .inputFieldContainer {
   position: relative;
 }
@@ -58,6 +31,7 @@
 
 .errorMessage {
   position: absolute;
+  top: 5px;
   right: 0;
 }
 
@@ -78,18 +52,51 @@
   text-align: center;
 }
 
-/* utility classes */
-
-.fsHeading {
-  font-size: var(--fs-800);
-}
-
 .fsInput {
   font-size: var(--fs-350);
 }
 
 .fsError {
-  font-size: var(--fs-200);
+  font-size: var(--fs-100);
+}
+
+@media (min-width: 40em) and (max-width: 60em) {
+  .fsError {
+    font-size: var(--fs-200);
+  }
+}
+
+@media (min-width: 60em) {
+  .fsError {
+    font-size: var(--fs-200);
+  }
+}
+
+.loginContainer {
+  display: grid;
+  grid-auto-rows: 15vh 1fr;
+  padding: 1.5rem;
+  gap: 1rem;
+  align-items: start;
+}
+
+.logo {
+  place-self: center;
+}
+
+.formContainer {
+  position: relative;
+  display: grid;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  border-radius: 10px;
+  width: min(98%, 400px);
+  place-items: center;
+  place-self: center;
+}
+
+.formContainer > * {
+  width: 100%;
 }
 
 @media (min-width: 40em) and (max-width: 60em) {
@@ -102,10 +109,6 @@
     padding: 2rem;
     gap: 2rem;
     min-height: 400px;
-  }
-
-  .fsError {
-    font-size: var(--fs-300);
   }
 }
 
@@ -120,8 +123,10 @@
     gap: 2rem;
     min-height: 400px;
   }
+}
 
-  .fsError {
-    font-size: var(--fs-300);
-  }
+/* utility classes */
+
+.fsHeading {
+  font-size: var(--fs-800);
 }
