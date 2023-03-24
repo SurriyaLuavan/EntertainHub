@@ -1,6 +1,13 @@
 import Head from "next/head";
+import { useShow } from "@/components/contextProviders/ShowProvider";
+import Layout from "@/components/layout/Layout";
+import ShowCard from "@/components/ShowCard";
+import uuid from "react-uuid";
 
 export default function Movies() {
+  const { data } = useShow();
+  const movieCollection = data.filter((item) => item.category === "Movie");
+
   return (
     <>
       <Head>
@@ -9,7 +16,20 @@ export default function Movies() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
-      <main></main>
+      <Layout>
+        <div className="showListContainer">
+          <div class="sectionWrapper">
+            <h1 className="padding-inline fs-l-primary-heading fw-light">
+              Movies
+            </h1>
+            <div className="showCardContainer | padding-inline padding-block-top padding-block-bottom">
+              {movieCollection.map((item) => (
+                <ShowCard show={item} key={uuid()} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </Layout>
     </>
   );
 }
