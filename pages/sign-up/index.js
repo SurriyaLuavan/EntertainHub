@@ -13,6 +13,19 @@ export default function Signup() {
     confirm: true,
   });
 
+  function resetFocus() {
+    Object.keys(focus).forEach((item) => {
+      setFocus((prev) => {
+        return { ...prev, [item]: false };
+      });
+    });
+  }
+
+  function handleSubmit(values) {
+    resetFocus();
+    formik.handleSubmit(values);
+  }
+
   function handleFocus(e) {
     setFocus((prev) => {
       return { ...prev, [e.target.name]: true };
@@ -52,7 +65,7 @@ export default function Signup() {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
 
-      <AuthLayout type="Sign Up" onSubmit={formik.handleSubmit}>
+      <AuthLayout type="Sign Up" onSubmit={handleSubmit}>
         <label htmlFor="email" className={styles.inputFieldContainer}>
           <input
             type="email"
