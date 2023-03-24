@@ -15,7 +15,7 @@ const AuthLayout = ({ type, children, onSubmit }) => {
       <form
         className={`${styles.formContainer} bg-primary-600`}
         onSubmit={onSubmit}
-        formNoValidate
+        noValidate
       >
         <h1 className={`${styles.fsHeading} fw-light`}>{type}</h1>
         {children}
