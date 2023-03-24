@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
-import styles from "/styles/Auth.module.css";
+import styles from "/styles/AuthPage.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
