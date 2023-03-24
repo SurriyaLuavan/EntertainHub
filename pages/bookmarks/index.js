@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
-import BookmarkMovies from "@/components/bookmarks/BookmarkMovies";
-import BookmarkSeries from "@/components/bookmarks/BookmarkSeries";
+import Bookmark from "@/components/Bookmark";
 
 export default function Bookmarks() {
   return (
@@ -14,8 +13,8 @@ export default function Bookmarks() {
       </Head>
       <Layout>
         <div className="showListContainer">
-          <BookmarkMovies />
-          <BookmarkSeries />
+          <Bookmark category="Movie" />
+          <Bookmark category="TV Series" />
         </div>
       </Layout>
     </>

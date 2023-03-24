@@ -1,27 +1,27 @@
-import { useShow } from "../contextProviders/ShowProvider";
-import ShowCard from "../ShowCard";
+import { useShow } from "./contextProviders/ShowProvider";
+import ShowCard from "./ShowCard";
 import uuid from "react-uuid";
 
-const BookmarkMovies = () => {
+const Bookmark = ({ category }) => {
   const { bookmark, data } = useShow();
   const bookmarkedCollection = data.filter(
     (item, index) => bookmark[index].bookmarkStatus
   );
-  const bookmarkedMovies = bookmarkedCollection.filter(
-    (item) => item.category === "Movie"
+  const bookmarked = bookmarkedCollection.filter(
+    (item) => item.category === category
   );
   return (
     <article>
       <h1 className="padding-inline fs-l-primary-heading fw-light">
-        Bookmarked Movies
+        Bookmarked {category === "Movie" ? "Movies" : "TV Series"}
       </h1>
-      {bookmarkedMovies.length > 0 ? (
+      {bookmarked.length > 0 ? (
         <div
           className={`showCardContainer ${
-            bookmarkedMovies.length <= 3 && "alignCard"
+            bookmarked.length <= 3 && "alignCard"
           } | padding-inline padding-block-top padding-block-bottom`}
         >
-          {bookmarkedMovies.map((item) => (
+          {bookmarked.map((item) => (
             <ShowCard show={item} key={uuid()} />
           ))}
         </div>
@@ -35,11 +35,11 @@ const BookmarkMovies = () => {
             gridAutoRows: "15vh",
           }}
         >
-          No bookmarked movies
+          No bookmarked {category === "Movie" ? "Movies" : "TV series"}
         </p>
       )}
     </article>
   );
 };
 
-export default BookmarkMovies;
+export default Bookmark;
