@@ -21,6 +21,7 @@ const SearchBar = ({ searchValue, onChange, onBack }) => {
     default:
       searchPlaceholder = "movies or TV series";
   }
+
   return (
     <section className={`${styles.searchContainer} | padding-inline `}>
       {searchValue !== "" && (

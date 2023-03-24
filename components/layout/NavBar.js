@@ -9,7 +9,7 @@ const NavBar = () => {
   const pathName = router.pathname;
   const [showAccount, setShowAccount] = useState(false);
   return (
-    <header className={`${styles.headerContainer} | bg-primary-600  `}>
+    <section className={`${styles.headerContainer} | bg-primary-600  `}>
       <Link href="/" data-tab="home">
         <svg className={styles.icon} xmlns="http://www.w3.org/2000/svg">
           <path
@@ -66,7 +66,7 @@ const NavBar = () => {
         showAccount={showAccount}
         setShowAccount={() => setShowAccount(!showAccount)}
       />
-    </header>
+    </section>
   );
 };
 

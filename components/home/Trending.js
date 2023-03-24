@@ -13,7 +13,7 @@ const Trending = () => {
       <ScrollContainer
         vertical={false}
         hideScrollbars={false}
-        className="scroll-container trendingShowContainer | padding-inline padding-block-top padding-block-bottom"
+        className="trendingShowContainer | padding-inline padding-block-top padding-block-bottom"
       >
         {trendingCollection.map((item) => (
           <ShowCard show={item} key={uuid()} container="trending" />
