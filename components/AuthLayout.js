@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Children } from "react";
 import styles from "/styles/AuthLayout.module.css";
 
 const AuthLayout = ({ type, children, onSubmit }) => {
@@ -16,6 +15,7 @@ const AuthLayout = ({ type, children, onSubmit }) => {
       <form
         className={`${styles.formContainer} bg-primary-600`}
         onSubmit={onSubmit}
+        formNoValidate
       >
         <h1 className={`${styles.fsHeading} fw-light`}>{type}</h1>
         {children}

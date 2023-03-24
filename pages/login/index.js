@@ -1,27 +1,24 @@
-import AuthLayout from "@/components/auth/AuthLayout";
+import AuthLayout from "@/components/AuthLayout";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
-import styles from "/styles/AuthPage.module.css";
+import styles from "/styles/FormField.module.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [valid, setValid] = useState({ email: true, password: true });
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (email === "" && password === "") {
-      setValid({ email: false, password: false });
-    } else if (password === "") {
-      setValid({ ...valid, password: false });
-    } else if (email === "") {
-      setValid({ ...valid, email: false });
-    } else {
-      setValid({ email: true, password: true });
-    }
-  }
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+    }),
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
     <>
@@ -31,49 +28,45 @@ export default function Login() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
-      <AuthLayout type="Login" onSubmit={handleSubmit}>
-        <div className={styles.inputFieldContainer}>
+      <AuthLayout type="Login" onSubmit={formik.handleSubmit}>
+        <label htmlFor="email" className={styles.inputFieldContainer}>
           <input
             type="email"
-            name="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onFocus={() => setValid({ email: true, password: true })}
+            {...formik.getFieldProps("email")}
             className={`${styles.inputField} | ${styles.fsInput} ${
-              !valid && styles.errorField
+              formik.touched.email && formik.errors.email && styles.errorField
             } bg-primary-600 text-neutral-100 fw-light`}
             placeholder="Email address"
           />
-          {!valid.email && (
-            <span
+          {formik.touched.email && formik.errors.email ? (
+            <div
               className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
             >
-              Invalid email ID
-            </span>
-          )}
-        </div>
-        <div className={styles.inputFieldContainer}>
+              {formik.errors.email}
+            </div>
+          ) : null}
+        </label>
+        <label htmlFor="password" className={styles.inputFieldContainer}>
           <input
             type="password"
-            name="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onFocus={() => setValid({ email: true, password: true })}
+            {...formik.getFieldProps("password")}
             className={`${styles.inputField}  | ${styles.fsInput} ${
-              !valid.password && styles.errorField
+              formik.touched.password &&
+              formik.errors.password &&
+              styles.errorField
             } bg-primary-600 text-neutral-100 fw-light`}
             placeholder="Password"
           />
-          {!valid.password && (
-            <span
+          {formik.touched.password && formik.errors.password ? (
+            <div
               className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
             >
-              Can&apos;t be empty
-            </span>
-          )}
-        </div>
+              {formik.errors.password}
+            </div>
+          ) : null}
+        </label>
         <button
           type="submit"
           className={`${styles.submitButton} | ${styles.fsInput} fw-light`}
@@ -89,4 +82,50 @@ export default function Login() {
       </AuthLayout>
     </>
   );
+}
+
+{
+  /* <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={Yup.object({
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Required"),
+            password: Yup.string().required("Required"),
+          })}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          <Form className={`${styles.formContainer} bg-primary-600`}>
+            <h1 className={`${styles.fsHeading} fw-light`}>Login</h1>
+            <Field
+              className={`${styles.inputField} | ${styles.fsInput} ${
+                isTouched && error
+              } bg-primary-600 text-neutral-100 fw-light`}
+              name="email"
+              type="email"
+              placeholder="Email address"
+            />
+            <ErrorMessage
+              className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
+              name="email"
+            />
+            <Field
+              className={`${styles.inputField} | ${styles.fsInput} ${
+                isTouched && error
+              } bg-primary-600 text-neutral-100 fw-light`}
+              name="password"
+              type="password"
+              placeholder="Password"
+            />
+            <ErrorMessage
+              className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
+              name="password"
+            />
+          </Form>
+        </Formik> */
 }

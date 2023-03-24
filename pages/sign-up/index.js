@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "/styles/AuthPage.module.css";
-import AuthLayout from "@/components/auth/AuthLayout";
+import styles from "/styles/FormField.module.css";
+import AuthLayout from "@/components/AuthLayout";
 import { useState } from "react";
 
 export default function Signup() {
