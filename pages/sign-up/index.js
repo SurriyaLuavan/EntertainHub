@@ -64,7 +64,6 @@ export default function Signup() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
-
       <AuthLayout type="Sign Up" onSubmit={handleSubmit}>
         <label htmlFor="email" className={styles.inputFieldContainer}>
           <input
@@ -134,7 +133,7 @@ export default function Signup() {
         </label>
         <button
           type="submit"
-          className={`${styles.submitButton} | ${styles.fsInput} fw-light`}
+          className={`${styles.submitButton} | ${styles.fsInput} fw-light `}
         >
           Create an account
         </button>

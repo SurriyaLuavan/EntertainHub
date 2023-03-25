@@ -15,16 +15,6 @@
   caret-color: var(--clr-accent);
 }
 
-.inputField::after {
-  content: "Hi";
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  inset: 0;
-  color: white;
-  border-bottom: 1px solid var(--clr-accent);
-}
-
 .errorField {
   border-bottom: 1px solid var(--clr-accent);
 }
@@ -36,9 +26,10 @@
 }
 
 .submitButton {
+  margin-top: 0.5rem;
   background-color: var(--clr-accent);
   color: var(--clr-neutral-100);
-  padding-block: 0.75rem;
+  padding-block: 1rem;
   border-radius: 6px;
 }
 
