@@ -1,5 +1,5 @@
-import { useShow } from "./contextProviders/ShowProvider";
-import ShowCard from "./ShowCard";
+import { useShow } from "@/components/context/ShowProvider";
+import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
 
 const Bookmark = ({ category }) => {
@@ -11,7 +11,6 @@ const Bookmark = ({ category }) => {
     (item) => item.category === category
   );
 
-  console.log(user);
   return (
     <article>
       <p style={{ color: "white" }}>{user}</p>

@@ -1,5 +1,5 @@
-import { useShow } from "../contextProviders/ShowProvider";
-import ShowCard from "../ShowCard";
+import { useShow } from "../components/context/ShowProvider";
+import ShowCard from "../components/ShowCard";
 import uuid from "react-uuid";
 
 const Recommendations = () => {

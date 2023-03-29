@@ -1,18 +1,12 @@
 import "@/styles/globals.css";
-import ShowProvider from "@/components/contextProviders/ShowProvider";
-import AuthProvider from "@/components/contextProviders/AuthProvider";
-import AlertProvider from "@/components/contextProviders/AlertProvider";
-import data from "/data.json";
+import ShowProvider from "@/components/context/ShowProvider";
+import AuthProvider from "@/components/context/AuthProvider";
 
 export default function myApp({ Component, pageProps }) {
   return (
     <>
       <AuthProvider>
-        <AlertProvider>
-          <ShowProvider data={data}>
-            <Component {...pageProps} />
-          </ShowProvider>
-        </AlertProvider>
+        <Component {...pageProps} />
       </AuthProvider>
     </>
   );
