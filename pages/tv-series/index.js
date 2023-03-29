@@ -1,13 +1,8 @@
 import Head from "next/head";
-import { useShow } from "@/components/contextProviders/ShowProvider";
 import Layout from "@/components/layout/Layout";
-import ShowCard from "@/components/ShowCard";
-import uuid from "react-uuid";
+import TvSeriesContainer from "./TvSeriesContainer";
 
 export default function TvSeries() {
-  const { data } = useShow();
-  const seriesCollection = data.filter((item) => item.category === "TV Series");
-
   return (
     <>
       <Head>
@@ -17,18 +12,7 @@ export default function TvSeries() {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <Layout>
-        <div className="showListContainer">
-          <div class="sectionWrapper">
-            <h1 className="padding-inline fs-l-primary-heading fw-light">
-              TV Series
-            </h1>
-            <div className="showCardContainer | padding-inline padding-block-top padding-block-bottom">
-              {seriesCollection.map((item) => (
-                <ShowCard show={item} key={uuid()} />
-              ))}
-            </div>
-          </div>
-        </div>
+        <TvSeriesContainer />
       </Layout>
     </>
   );

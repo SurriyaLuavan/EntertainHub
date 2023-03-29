@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useShow } from "../contextProviders/ShowProvider";
+import { useShow } from "../context/ShowProvider";
 import ShowCard from "../ShowCard";
 import uuid from "react-uuid";
 

@@ -1,17 +1,19 @@
-import { useShow } from "./contextProviders/ShowProvider";
-import ShowCard from "./ShowCard";
+import { useShow } from "@/components/context/ShowProvider";
+import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
 
 const Bookmark = ({ category }) => {
-  const { bookmark, data } = useShow();
+  const { bookmark, data, user } = useShow();
   const bookmarkedCollection = data.filter(
     (item, index) => bookmark[index].bookmarkStatus
   );
   const bookmarked = bookmarkedCollection.filter(
     (item) => item.category === category
   );
+
   return (
     <article>
+      <p style={{ color: "white" }}>{user}</p>
       <h1 className="padding-inline fs-l-primary-heading fw-light">
         Bookmarked {category === "Movie" ? "Movies" : "TV Series"}
       </h1>

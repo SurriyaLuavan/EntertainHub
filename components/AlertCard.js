@@ -1,5 +1,5 @@
 import { Snackbar, Alert } from "@mui/material";
-import { useAlert } from "./contextProviders/AlertProvider";
+import { useAlert } from "./context/AlertProvider";
 
 const AlertCard = () => {
   const { isOpen, type, message, onClose } = useAlert();

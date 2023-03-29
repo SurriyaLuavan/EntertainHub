@@ -8,6 +8,14 @@
   border-radius: 100vmax;
 }
 
+.accountContainer.logout {
+  display: block;
+}
+
+.logout > * {
+  width: 100%;
+}
+
 .accountContainer {
   position: absolute;
   display: grid;
@@ -31,9 +39,11 @@
 
 .accountContainer > *:hover {
   background-color: var(--clr-accent-light);
+  cursor: pointer;
 }
 
-.accountContainer a {
+.accountContainer a,
+.accountContainer button {
   color: var(--clr-neutral-100);
 }
 
@@ -57,5 +67,10 @@
   .accountContainer {
     top: -75px;
     left: 75px;
+  }
+
+  .accountContainer.logout {
+    display: block;
+    top: -30px;
   }
 }

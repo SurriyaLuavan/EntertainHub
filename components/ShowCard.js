@@ -1,4 +1,4 @@
-import { useShow } from "./contextProviders/ShowProvider";
+import { useShow } from "./context/ShowProvider";
 import styles from "/styles/ShowCard.module.css";
 import { SyncLoader } from "react-spinners";
 

@@ -1,8 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "../context/AuthProvider";
 import styles from "/styles/UserProfile.module.css";
+import { useSignOut } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebase";
+import { useAlert } from "../context/AlertProvider";
 
 const UserProfile = ({ showAccount, setShowAccount }) => {
+  const { user } = useAuth();
+  const { onOpen } = useAlert();
+  const [signOut, loading, error] = useSignOut(auth);
+
+  async function handleLogout() {
+    const success = await signOut();
+    if (success) {
+      onOpen("success", "Logout successful!");
+    } else {
+      onOpen("error", "Logout failed!");
+    }
+    setShowAccount();
+  }
+
   return (
     <div className={styles.profileContainer}>
       <Image
@@ -13,12 +31,17 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
         alt="profile-picture"
         onClick={setShowAccount}
       />
-      {showAccount && (
-        <div className={styles.accountContainer}>
-          <Link href="/sign-up">Sign-up</Link>
-          <Link href="/login">Login</Link>{" "}
-        </div>
-      )}
+      {showAccount &&
+        (user ? (
+          <div className={`${styles.accountContainer} ${styles.logout}`}>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        ) : (
+          <div className={styles.accountContainer}>
+            <Link href="/sign-up">Sign-up</Link>
+            <Link href="/login">Login</Link>{" "}
+          </div>
+        ))}
     </div>
   );
 };
