@@ -1,12 +1,24 @@
 import AuthLayout from "@/components/AuthLayout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "/styles/FormField.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import AlertCard from "@/components/AlertCard";
+import { auth } from "@/lib/firebase";
+import { useAlert } from "@/components/contextProviders/AlertProvider";
+
+const errorCode = {
+  notFound: "auth/user-not-found",
+  wrongPassword: "auth/wrong-password",
+};
 
 export default function Login() {
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+  const { onOpen } = useAlert();
   const [focus, setFocus] = useState({
     email: true,
     password: true,
@@ -47,9 +59,37 @@ export default function Login() {
       password: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      signInWithEmailAndPassword(values.email, values.password);
     },
   });
+
+  useEffect(() => {
+    if (!loading && (user || error)) {
+      if (error) console.log(error);
+      const type = error === undefined ? "success" : "error";
+
+      let message;
+      if (error) {
+        switch (error.code) {
+          case errorCode.notFound:
+            message = "User not found";
+            break;
+          case errorCode.wrongPassword:
+            message = "Incorrect password";
+            break;
+          default:
+            message = "Login Successful";
+        }
+      } else {
+        message = "Login successful!";
+      }
+
+      if (type === "success") {
+        formik.handleReset();
+      }
+      onOpen(type, message);
+    }
+  }, [user, error]);
 
   return (
     <>
@@ -59,6 +99,7 @@ export default function Login() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
+      <AlertCard />
       <AuthLayout type="Login" onSubmit={handleSubmit}>
         <label htmlFor="email" className={styles.inputFieldContainer}>
           <input

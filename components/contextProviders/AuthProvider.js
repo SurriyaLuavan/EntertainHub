@@ -10,12 +10,12 @@ export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
 
   const [user, loading, error] = useAuthState(auth);
-  //   const values = {
-  //     userID,
-  //     signup,
-  //   };
 
-  return <AuthContext.Provider value={"hi"}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user: user ? user.email : null }}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 }
 
 export const useAuth = () => useContext(AuthContext);
