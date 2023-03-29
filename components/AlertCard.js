@@ -4,12 +4,17 @@ import { useAlert } from "./context/AlertProvider";
 const AlertCard = () => {
   const { isOpen, type, message, onClose } = useAlert();
   return (
-    <Snackbar open={isOpen} autoHideDuration={6000} onClose={onClose}>
+    <Snackbar
+      open={isOpen}
+      autoHideDuration={6000}
+      onClose={onClose}
+      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+    >
       <Alert
         onClose={onClose}
         variant="filled"
         severity={type}
-        sx={{ width: "20rem" }}
+        sx={{ width: "25rem" }}
       >
         {message}
       </Alert>

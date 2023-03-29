@@ -1,6 +1,6 @@
 import Head from "next/head";
 import AlertProvider from "@/components/context/AlertProvider";
-import AuthSignup from "@/pages/sign-up/AuthSignup";
+import AuthSignup from "@/components/auth/AuthSignup";
 
 export default function Signup() {
   return (

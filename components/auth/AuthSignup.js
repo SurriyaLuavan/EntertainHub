@@ -1,26 +1,22 @@
-import AuthLayout from "@/components/layout-auth/AuthLayout";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "/styles/FormField.module.css";
+import AuthLayout from "@/components/auth/AuthLayout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useState } from "react";
 import { auth } from "@/lib/firebase";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useEffect } from "react";
 import { useAlert } from "@/components/context/AlertProvider";
-import { CircularProgress } from "@mui/material";
 
-const errorCode = {
-  notFound: "auth/user-not-found",
-  wrongPassword: "auth/wrong-password",
-};
-
-const AuthLogin = () => {
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+const AuthSignup = () => {
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
   const { onOpen } = useAlert();
   const [focus, setFocus] = useState({
     email: true,
     password: true,
+    confirm: true,
   });
 
   function resetFocus() {
@@ -52,36 +48,27 @@ const AuthLogin = () => {
     initialValues: {
       email: "",
       password: "",
+      confirm: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
+      password: Yup.string().required("Required").min(8, "Min. 8 characters"),
+      confirm: Yup.string()
+        .required("Required")
+        .oneOf([Yup.ref("password"), null], "Password must match"),
     }),
     onSubmit: (values) => {
-      const success = signInWithEmailAndPassword(values.email, values.password);
+      createUserWithEmailAndPassword(values.email, values.password);
     },
   });
 
   useEffect(() => {
     if (!loading && (user || error)) {
-      if (error) console.log(error);
       const type = error === undefined ? "success" : "error";
-
-      let message;
-      if (error) {
-        switch (error.code) {
-          case errorCode.notFound:
-            message = "User not found";
-            break;
-          case errorCode.wrongPassword:
-            message = "Incorrect password";
-            break;
-          default:
-            message = "Login Successful";
-        }
-      } else {
-        message = "Login successful!";
-      }
+      const message =
+        error && error.code === "auth/email-already-in-use"
+          ? "Email already exits!"
+          : "Sign-up successful!";
 
       if (type === "success") {
         formik.handleReset();
@@ -91,7 +78,7 @@ const AuthLogin = () => {
   }, [user, error]);
 
   return (
-    <AuthLayout type="Login" onSubmit={handleSubmit}>
+    <AuthLayout type="Sign Up" onSubmit={handleSubmit}>
       <label htmlFor="email" className={styles.inputFieldContainer}>
         <input
           type="email"
@@ -136,20 +123,43 @@ const AuthLogin = () => {
           </div>
         ) : null}
       </label>
+      <label htmlFor="confirm" className={styles.inputFieldContainer}>
+        <input
+          type="password"
+          id="confirm"
+          name="confirm"
+          onChange={formik.handleChange}
+          value={formik.values.confirm}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className={`${styles.inputField}  | ${styles.fsInput} ${
+            !focus.confirm && formik.errors.confirm && styles.errorField
+          } bg-primary-600 text-neutral-100 fw-light`}
+          placeholder="Repeat password"
+        />
+        {!focus.confirm && formik.errors.confirm && (
+          <span
+            className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
+          >
+            {formik.errors.confirm}
+          </span>
+        )}
+      </label>
       <button
         type="submit"
-        className={`${styles.submitButton} | ${styles.fsInput} fw-light`}
+        disabled={loading}
+        className={`${styles.submitButton} | ${styles.fsInput} fw-light `}
       >
-        {loading ? <CircularProgress /> : " Login to your account"}
+        {loading ? "Signing up..." : "Create an account"}
       </button>
       <p className={`${styles.fsInput} ${styles.para} fw-light`}>
-        Don&apos;t have an account?{" "}
-        <Link className="text-accent" href="/sign-up">
-          Sign Up
+        Already have an account?{" "}
+        <Link href="/login" className="text-accent">
+          Login
         </Link>
       </p>
     </AuthLayout>
   );
 };
 
-export default AuthLogin;
+export default AuthSignup;
