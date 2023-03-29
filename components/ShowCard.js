@@ -1,11 +1,15 @@
 import { useShow } from "./context/ShowProvider";
 import styles from "/styles/ShowCard.module.css";
 import { SyncLoader } from "react-spinners";
+import { useAuth } from "./context/AuthProvider";
+import { useAlert } from "./context/AlertProvider";
 
 const ShowCard = ({ show: currentShow, container }) => {
   const { bookmark, onBookmarked } = useShow();
   const [status] = bookmark.filter((item) => item.title === currentShow.title);
   const isBookmarked = status.bookmarkStatus;
+  const { user } = useAuth();
+  const { onOpen } = useAlert();
 
   const resolutionSelector =
     container === "trending" ? (
@@ -66,6 +70,15 @@ const ShowCard = ({ show: currentShow, container }) => {
       />
     </svg>
   );
+
+  function handleBookmark() {
+    if (!user) {
+      onOpen("warning", "Sign-up or login to bookmark");
+    } else {
+      onBookmarked(currentShow.title);
+    }
+  }
+
   return currentShow === undefined ? (
     <SyncLoader />
   ) : (
@@ -74,10 +87,7 @@ const ShowCard = ({ show: currentShow, container }) => {
         container === "trending" && styles.trendingCard
       }`}
     >
-      <button
-        className={styles.bookmarkButton}
-        onClick={() => onBookmarked(currentShow.title)}
-      >
+      <button className={styles.bookmarkButton} onClick={handleBookmark}>
         {bookmarkIcon}
       </button>
       <div

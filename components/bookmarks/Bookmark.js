@@ -13,7 +13,6 @@ const Bookmark = ({ category }) => {
 
   return (
     <article>
-      <p style={{ color: "white" }}>{user}</p>
       <h1 className="padding-inline fs-l-primary-heading fw-light">
         Bookmarked {category === "Movie" ? "Movies" : "TV Series"}
       </h1>
