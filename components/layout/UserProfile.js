@@ -21,10 +21,12 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
     setShowAccount();
   }
 
+  const imgSrc = user ? "/assets/image-avatar.png" : "/assets/no-profile.png";
+
   return (
     <div className={styles.profileContainer}>
       <Image
-        src="/assets/image-avatar.png"
+        src={imgSrc}
         className={styles.photo}
         width={25}
         height={25}

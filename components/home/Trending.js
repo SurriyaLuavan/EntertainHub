@@ -1,7 +1,7 @@
-import { useShow } from "../components/context/ShowProvider";
+import { useShow } from "../context/ShowProvider";
 import ScrollContainer from "react-indiana-drag-scroll";
 import uuid from "react-uuid";
-import ShowCard from "../components/ShowCard";
+import ShowCard from "../ShowCard";
 
 const Trending = () => {
   const { data } = useShow();

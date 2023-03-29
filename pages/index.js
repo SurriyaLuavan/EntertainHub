@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
-import Trending from "@/pages/Trending";
-import Recommendations from "@/pages/Recommendations";
+import Trending from "@/components/home/Trending";
+import Recommendations from "@/components/home/Recommendations";
 
 export default function Home() {
   return (

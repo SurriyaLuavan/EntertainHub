@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
-import TvSeriesContainer from "./TvSeriesContainer";
+import TvSeriesContainer from "../../components/tv-series/TvSeriesContainer";
 
 export default function TvSeries() {
   return (

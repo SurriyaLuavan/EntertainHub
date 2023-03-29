@@ -1,6 +1,6 @@
 import Head from "next/head";
 import AlertProvider from "@/components/context/AlertProvider";
-import AuthLogin from "@/pages/login/AuthLogin";
+import AuthLogin from "@/components/auth/AuthLogin";
 
 export default function Login() {
   return (

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useShow } from "@/components/context/ShowProvider";
 import Layout from "@/components/layout/Layout";
-import MovieContainer from "@/pages/movies/MovieContainer";
+import MovieContainer from "@/components/movies/MovieContainer";
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
 

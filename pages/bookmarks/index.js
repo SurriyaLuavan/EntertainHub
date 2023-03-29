@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
-import Bookmark from "@/pages/bookmarks/Bookmark";
+import Bookmark from "@/components/bookmarks/Bookmark";
 
 export default function Bookmarks() {
   return (
