@@ -5,8 +5,16 @@ import AuthLayout from "@/components/AuthLayout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
+import { auth } from "@/lib/firebase";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import AlertCard from "@/components/AlertCard";
+import { useEffect } from "react";
+import { useAlert } from "@/components/contextProviders/AlertProvider";
 
 export default function Signup() {
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+  const { onOpen } = useAlert();
   const [focus, setFocus] = useState({
     email: true,
     password: true,
@@ -52,9 +60,24 @@ export default function Signup() {
         .oneOf([Yup.ref("password"), null], "Password must match"),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      createUserWithEmailAndPassword(values.email, values.password);
     },
   });
+
+  useEffect(() => {
+    if (!loading && (user || error)) {
+      const type = error === undefined ? "success" : "error";
+      const message =
+        error && error.code === "auth/email-already-in-use"
+          ? "Email already exits!"
+          : "Sign-up successful!";
+
+      if (type === "success") {
+        formik.handleReset();
+      }
+      onOpen(type, message);
+    }
+  }, [user, error]);
 
   return (
     <>
@@ -64,6 +87,7 @@ export default function Signup() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
+      <AlertCard />
       <AuthLayout type="Sign Up" onSubmit={handleSubmit}>
         <label htmlFor="email" className={styles.inputFieldContainer}>
           <input
@@ -133,9 +157,10 @@ export default function Signup() {
         </label>
         <button
           type="submit"
+          disabled={loading}
           className={`${styles.submitButton} | ${styles.fsInput} fw-light `}
         >
-          Create an account
+          {loading ? "Loading" : "Create an account"}
         </button>
         <p className={`${styles.fsInput} ${styles.para} fw-light`}>
           Already have an account?{" "}
