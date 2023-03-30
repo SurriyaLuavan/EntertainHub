@@ -64,10 +64,8 @@ const AuthLogin = () => {
 
   useEffect(() => {
     if (!loading && (user || error)) {
-      if (error) console.log(error);
-      const type = error === undefined ? "success" : "error";
-
       let message;
+      const type = error === undefined ? "success" : "error";
       if (error) {
         switch (error.code) {
           case errorCode.notFound:
