@@ -12,10 +12,8 @@ export default function ShowProvider({ children, data }) {
   const [docData, loading, error] = useDocument(
     doc(db, "users", userId ? userId : "No user")
   );
-
   const bookmarkData =
     docData && docData.exists() ? docData.data().bookmark : [];
-
   const bookmarked = bookmarkData.filter((item) => item.bookmarkStatus);
 
   function handleBookmark(title) {

@@ -5,6 +5,7 @@ import uuid from "react-uuid";
 const MovieContainer = () => {
   const { data } = useShow();
   const movieCollection = data.filter((item) => item.category === "Movie");
+
   return (
     <div className="showListContainer">
       <div class="sectionWrapper">

@@ -82,9 +82,7 @@ const AuthSignup = () => {
 
   useEffect(() => {
     if (!loading && !error && user) {
-      console.log(user);
       const data = formatUser(user.user);
-      console.log(data);
       createUser(user.user.uid, data);
     }
   }, [user]);

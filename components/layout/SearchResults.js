@@ -6,7 +6,7 @@ import uuid from "react-uuid";
 const SearchResults = ({ searchValue }) => {
   const router = useRouter();
   const { bookmark, data } = useShow();
-  const regex = new RegExp(`\\b${searchValue}\\w*\\b`);
+  const regex = new RegExp(`\\b${searchValue}\\w*\\b`, "i");
   let collection;
 
   switch (router.pathname) {
@@ -31,6 +31,7 @@ const SearchResults = ({ searchValue }) => {
   const searchFilter = collection.filter((item) =>
     regex.test(item.title.toLowerCase())
   );
+
   return (
     <section className="showListContainer">
       <h2 className="padding-inline fs-l-primary-heading fw-light">

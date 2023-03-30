@@ -19,7 +19,6 @@ const Bookmark = ({ category }) => {
       <h1 className="padding-inline fs-l-primary-heading fw-light">
         Bookmarked {category === "Movie" ? "Movies" : "TV Series"}
       </h1>
-
       {bookmarked.length > 0 ? (
         loading ? (
           <div style={{ display: "grid", placeContent: "center" }}>
