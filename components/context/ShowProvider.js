@@ -25,18 +25,15 @@ export default function ShowProvider({ children, data }) {
           ? bookmarkData.filter((item) => item.title === title)
           : [];
 
-      console.log(exist);
       if (exist.length === 0) {
         const [showItem] = data
           .filter((item) => item.title === title)
           .map((item) => {
             return { title: item.title, bookmarkStatus: true };
           });
-        console.log(showItem);
         const showData = {
           bookmark: arrayUnion(showItem),
         };
-        console.log(showData);
         updateUser(userId, showData);
       } else {
         const [showItemOld] = exist;
@@ -46,11 +43,9 @@ export default function ShowProvider({ children, data }) {
             bookmarkStatus: !item.bookmarkStatus,
           };
         });
-        console.log(showItem);
         const showData = {
           bookmark: arrayUnion(showItem),
         };
-        console.log(showData);
         updateUser(userId, showData);
         updateUser(userId, {
           bookmark: arrayRemove(showItemOld),

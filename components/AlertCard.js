@@ -6,8 +6,6 @@ const AlertCard = () => {
   const { isOpen, type, message, onClose } = useAlert();
   const isDesktop = useMediaQuery("(min-width: 40em)");
   const isWide = useMediaQuery("(min-height: 60em");
-  // const horizontalValue = isDesktop ? "left" : "center";
-  // const verticalValue = isWide ? "bottom" : "top";
 
   return (
     <Snackbar
