@@ -8,6 +8,7 @@ import { auth } from "@/lib/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 import { useAlert } from "@/components/context/AlertProvider";
+import { CircularProgress } from "@mui/material";
 
 const AuthSignup = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -150,7 +151,16 @@ const AuthSignup = () => {
         disabled={loading}
         className={`${styles.submitButton} | ${styles.fsInput} fw-light `}
       >
-        {loading ? "Signing up..." : "Create an account"}
+        {loading ? (
+          <CircularProgress
+            size={18}
+            sx={{
+              color: "black",
+            }}
+          />
+        ) : (
+          "Create an account"
+        )}
       </button>
       <p className={`${styles.fsInput} ${styles.para} fw-light`}>
         Already have an account?{" "}

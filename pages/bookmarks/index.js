@@ -1,8 +1,23 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
 import Bookmark from "@/components/bookmarks/Bookmark";
+import { useAuth } from "@/components/context/AuthProvider";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 export default function Bookmarks() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
+    }
+  }, [user]);
+
   return (
     <>
       <Head>
@@ -13,8 +28,17 @@ export default function Bookmarks() {
       </Head>
       <Layout>
         <div className="showListContainer">
-          <Bookmark category="Movie" />
-          <Bookmark category="TV Series" />
+          {!user ? (
+            <p className="padding-block-top padding-inline fs-m-primary-heading fw-light">
+              You don&apos;t have access to this page. You are now redirected to
+              the home page.
+            </p>
+          ) : (
+            <>
+              <Bookmark category="Movie" />
+              <Bookmark category="TV Series" />{" "}
+            </>
+          )}
         </div>
       </Layout>
     </>

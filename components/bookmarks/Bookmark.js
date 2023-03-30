@@ -1,9 +1,10 @@
 import { useShow } from "@/components/context/ShowProvider";
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
+import { useAuth } from "../context/AuthProvider";
 
 const Bookmark = ({ category }) => {
-  const { bookmark, data, user } = useShow();
+  const { bookmark, data } = useShow();
   const bookmarkedCollection = data.filter(
     (item, index) => bookmark[index].bookmarkStatus
   );

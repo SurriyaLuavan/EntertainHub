@@ -21,7 +21,7 @@ const AlertCard = () => {
         onClose={onClose}
         variant="filled"
         severity={type}
-        sx={{ width: "18rem" }}
+        sx={{ width: "20rem" }}
       >
         {message}
       </Alert>
