@@ -1,14 +1,13 @@
-import { Snackbar, Alert } from "@mui/material";
+import { Slide, Snackbar, Alert } from "@mui/material";
 import { useAlert } from "./context/AlertProvider";
 import { useMediaQuery } from "@mui/material";
 
 const AlertCard = () => {
   const { isOpen, type, message, onClose } = useAlert();
-  const isDesktop = useMediaQuery("(min-width: 60em)");
-
-  const isNarrow = useMediaQuery("(max-height: 40em");
+  const isDesktop = useMediaQuery("(min-width: 40em)");
+  const isWide = useMediaQuery("(min-height: 60em");
   const horizontalValue = isDesktop ? "left" : "center";
-  const verticalValue = isNarrow ? "top" : "bottom";
+  const verticalValue = isWide ? "bottom" : "top";
 
   return (
     <Snackbar
@@ -21,7 +20,7 @@ const AlertCard = () => {
         onClose={onClose}
         variant="filled"
         severity={type}
-        sx={{ width: "20rem" }}
+        sx={{ width: "100%" }}
       >
         {message}
       </Alert>

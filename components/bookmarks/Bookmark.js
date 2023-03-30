@@ -5,9 +5,11 @@ import { useAuth } from "../context/AuthProvider";
 
 const Bookmark = ({ category }) => {
   const { bookmark, data } = useShow();
-  const bookmarkedCollection = data.filter(
-    (item, index) => bookmark[index].bookmarkStatus
+
+  const bookmarkedCollection = data.filter((item) =>
+    bookmark.some((item2) => item.title === item2.title)
   );
+
   const bookmarked = bookmarkedCollection.filter(
     (item) => item.category === category
   );
@@ -17,6 +19,7 @@ const Bookmark = ({ category }) => {
       <h1 className="padding-inline fs-l-primary-heading fw-light">
         Bookmarked {category === "Movie" ? "Movies" : "TV Series"}
       </h1>
+
       {bookmarked.length > 0 ? (
         <div
           className={`showCardContainer ${

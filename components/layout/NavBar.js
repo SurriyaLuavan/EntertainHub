@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthProvider";
 const NavBar = () => {
   const router = useRouter();
   const pathName = router.pathname;
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const [showAccount, setShowAccount] = useState(false);
 
   return (
@@ -53,7 +53,7 @@ const NavBar = () => {
               </svg>
             </Link>
           </li>
-          {user && (
+          {userId && (
             <li>
               <Link href="/bookmarks" data-tab="bookmarks">
                 <svg width="17" height="20" xmlns="http://www.w3.org/2000/svg">

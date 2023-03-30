@@ -6,10 +6,19 @@ import { useAlert } from "./context/AlertProvider";
 
 const ShowCard = ({ show: currentShow, container }) => {
   const { bookmark, onBookmarked } = useShow();
-  const [status] = bookmark.filter((item) => item.title === currentShow.title);
-  const isBookmarked = status.bookmarkStatus;
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const { onOpen } = useAlert();
+
+  let isBookmarked;
+  if (bookmark.length !== 0) {
+    const [status] = bookmark.filter(
+      (item) => item.title === currentShow.title
+    );
+    console.log(status);
+    isBookmarked = status && status.bookmarkStatus;
+  } else {
+    isBookmarked = false;
+  }
 
   const resolutionSelector =
     container === "trending" ? (
@@ -72,7 +81,7 @@ const ShowCard = ({ show: currentShow, container }) => {
   );
 
   function handleBookmark() {
-    if (!user) {
+    if (!userId) {
       onOpen("warning", "Sign-up or login to bookmark");
     } else {
       onBookmarked(currentShow.title);

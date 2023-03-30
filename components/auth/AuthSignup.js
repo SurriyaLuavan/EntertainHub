@@ -9,6 +9,8 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 import { useAlert } from "@/components/context/AlertProvider";
 import { CircularProgress } from "@mui/material";
+import { createUser } from "@/lib/db";
+import { formatUser } from "@/lib/db";
 
 const AuthSignup = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -77,6 +79,15 @@ const AuthSignup = () => {
       onOpen(type, message);
     }
   }, [user, error]);
+
+  useEffect(() => {
+    if (!loading && !error && user) {
+      console.log(user);
+      const data = formatUser(user.user);
+      console.log(data);
+      createUser(user.user.uid, data);
+    }
+  }, [user]);
 
   return (
     <AuthLayout type="Sign Up" onSubmit={handleSubmit}>

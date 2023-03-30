@@ -13,7 +13,9 @@ export default function AlertProvider({ children }) {
     if (reason === "clickaway") {
       return;
     }
-    setState({ isOpen: false, type: "", message: "" });
+    setState((prev) => {
+      return { ...prev, isOpen: false };
+    });
   };
 
   return (
