@@ -1,10 +1,10 @@
 import { useShow } from "@/components/context/ShowProvider";
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
-import { useAuth } from "../context/AuthProvider";
+import { CircularProgress } from "@mui/material";
 
 const Bookmark = ({ category }) => {
-  const { bookmark, data } = useShow();
+  const { bookmark, data, loading } = useShow();
 
   const bookmarkedCollection = data.filter((item) =>
     bookmark.some((item2) => item.title === item2.title)
@@ -21,15 +21,25 @@ const Bookmark = ({ category }) => {
       </h1>
 
       {bookmarked.length > 0 ? (
-        <div
-          className={`showCardContainer ${
-            bookmarked.length <= 3 && "alignCard"
-          } | padding-inline padding-block-top padding-block-bottom`}
-        >
-          {bookmarked.map((item) => (
-            <ShowCard show={item} key={uuid()} />
-          ))}
-        </div>
+        loading ? (
+          <div style={{ display: "grid", placeContent: "center" }}>
+            <CircularProgress
+              sx={{
+                color: "red",
+              }}
+            />
+          </div>
+        ) : (
+          <div
+            className={`showCardContainer ${
+              bookmarked.length <= 3 && "alignCard"
+            } | padding-inline padding-block-top padding-block-bottom`}
+          >
+            {bookmarked.map((item) => (
+              <ShowCard show={item} key={uuid()} />
+            ))}
+          </div>
+        )
       ) : (
         <p
           className="fs-m-primary-heading fw-light"

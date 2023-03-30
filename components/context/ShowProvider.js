@@ -16,12 +16,12 @@ export default function ShowProvider({ children, data }) {
   const bookmarkData =
     docData && docData.exists() ? docData.data().bookmark : [];
 
-  console.log(bookmarkData);
+  const bookmarked = bookmarkData.filter((item) => item.bookmarkStatus);
 
   function handleBookmark(title) {
     if (userId && docData && docData.exists()) {
       const exist =
-        bookmarkData.length === 0
+        bookmarkData.length !== 0
           ? bookmarkData.filter((item) => item.title === title)
           : [];
 
@@ -34,7 +34,6 @@ export default function ShowProvider({ children, data }) {
           });
         console.log(showItem);
         const showData = {
-          // bookmark: [...bookmarkData, showItem],
           bookmark: arrayUnion(showItem),
         };
         console.log(showData);
@@ -47,37 +46,26 @@ export default function ShowProvider({ children, data }) {
             bookmarkStatus: !item.bookmarkStatus,
           };
         });
-        updateUser(userId, {
-          bookmark: arrayRemove(showItemOld),
-        });
+        console.log(showItem);
         const showData = {
-          // bookmark: [...bookmarkData, showItem],
           bookmark: arrayUnion(showItem),
         };
         console.log(showData);
         updateUser(userId, showData);
+        updateUser(userId, {
+          bookmark: arrayRemove(showItemOld),
+        });
       }
     }
   }
 
-  // function handleBookmark(title) {
-  //   setBookmark((prev) => {
-  //     return prev.map((item) => {
-  //       if (item.title === title)
-  //         return { ...item, bookmarkStatus: !item.bookmarkStatus };
-  //       else {
-  //         return item;
-  //       }
-  //     });
-  //   });
-  // }
-
   return (
     <ShowContext.Provider
       value={{
-        bookmark: bookmarkData,
+        bookmark: bookmarked,
         onBookmarked: handleBookmark,
         data: data,
+        loading,
         docData: bookmarkData,
       }}
     >

@@ -10,14 +10,6 @@ export default function Bookmarks() {
   const { userId } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!userId) {
-      setTimeout(() => {
-        router.push("/");
-      }, 3000);
-    }
-  }, [userId, router]);
-
   return (
     <>
       <Head>
@@ -30,8 +22,8 @@ export default function Bookmarks() {
         <div className="showListContainer">
           {!userId ? (
             <p className="padding-block-top padding-inline fs-m-primary-heading fw-light">
-              You don&apos;t have access to this page. You are now redirected to
-              the home page.
+              You don&apos;t have access to this page. Login or Signup to
+              access.
             </p>
           ) : (
             <>

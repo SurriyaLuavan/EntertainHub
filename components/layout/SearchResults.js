@@ -20,7 +20,9 @@ const SearchResults = ({ searchValue }) => {
       collection = data.filter((item) => item.category === "TV Series");
       break;
     case "/bookmarks":
-      collection = data.filter((item, index) => bookmark[index].bookmarkStatus);
+      collection = data.filter((item) =>
+        bookmark.some((item2) => item.title === item2.title)
+      );
       break;
     default:
       collection = data;
