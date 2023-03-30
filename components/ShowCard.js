@@ -3,7 +3,6 @@ import styles from "/styles/ShowCard.module.css";
 import { CircularProgress } from "@mui/material";
 import { useAuth } from "./context/AuthProvider";
 import { useAlert } from "./context/AlertProvider";
-import { grid } from "@mui/system";
 
 const ShowCard = ({ show: currentShow, container }) => {
   const { bookmark, onBookmarked, loading } = useShow();
