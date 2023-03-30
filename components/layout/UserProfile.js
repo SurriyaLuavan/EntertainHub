@@ -11,6 +11,8 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
   const { onOpen } = useAlert();
   const [signOut, loading, error] = useSignOut(auth);
 
+  console.log(user);
+
   async function handleLogout() {
     const success = await signOut();
     if (success) {

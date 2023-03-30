@@ -140,7 +140,16 @@ const AuthLogin = () => {
         type="submit"
         className={`${styles.submitButton} | ${styles.fsInput} fw-light`}
       >
-        {loading ? "Logging in..." : " Login to your account"}
+        {loading ? (
+          <CircularProgress
+            size={18}
+            sx={{
+              color: "black",
+            }}
+          />
+        ) : (
+          " Login to your account"
+        )}
       </button>
       <p className={`${styles.fsInput} ${styles.para} fw-light`}>
         Don&apos;t have an account?{" "}

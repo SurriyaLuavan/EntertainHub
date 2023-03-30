@@ -1,9 +1,10 @@
 import { useShow } from "@/components/context/ShowProvider";
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
+import { useAuth } from "../context/AuthProvider";
 
 const Bookmark = ({ category }) => {
-  const { bookmark, data, user } = useShow();
+  const { bookmark, data } = useShow();
   const bookmarkedCollection = data.filter(
     (item, index) => bookmark[index].bookmarkStatus
   );
@@ -13,7 +14,6 @@ const Bookmark = ({ category }) => {
 
   return (
     <article>
-      <p style={{ color: "white" }}>{user}</p>
       <h1 className="padding-inline fs-l-primary-heading fw-light">
         Bookmarked {category === "Movie" ? "Movies" : "TV Series"}
       </h1>
