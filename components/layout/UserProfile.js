@@ -7,11 +7,9 @@ import { auth } from "@/lib/firebase";
 import { useAlert } from "../context/AlertProvider";
 
 const UserProfile = ({ showAccount, setShowAccount }) => {
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const { onOpen } = useAlert();
   const [signOut, loading, error] = useSignOut(auth);
-
-  console.log(user);
 
   async function handleLogout() {
     const success = await signOut();
@@ -23,7 +21,7 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
     setShowAccount();
   }
 
-  const imgSrc = user ? "/assets/image-avatar.png" : "/assets/no-profile.png";
+  const imgSrc = userId ? "/assets/image-avatar.png" : "/assets/no-profile.png";
 
   return (
     <div className={styles.profileContainer}>
@@ -36,7 +34,7 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
         onClick={setShowAccount}
       />
       {showAccount &&
-        (user ? (
+        (userId ? (
           <div className={`${styles.accountContainer} ${styles.logout}`}>
             <button onClick={handleLogout}>Logout</button>
           </div>

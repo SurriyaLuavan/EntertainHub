@@ -7,16 +7,8 @@ import { useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 
 export default function Bookmarks() {
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!user) {
-      setTimeout(() => {
-        router.push("/");
-      }, 3000);
-    }
-  }, [user]);
 
   return (
     <>
@@ -28,10 +20,10 @@ export default function Bookmarks() {
       </Head>
       <Layout>
         <div className="showListContainer">
-          {!user ? (
+          {!userId ? (
             <p className="padding-block-top padding-inline fs-m-primary-heading fw-light">
-              You don&apos;t have access to this page. You are now redirected to
-              the home page.
+              You don&apos;t have access to this page. Login or Signup to
+              access.
             </p>
           ) : (
             <>

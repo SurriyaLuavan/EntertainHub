@@ -1,15 +1,24 @@
 import { useShow } from "./context/ShowProvider";
 import styles from "/styles/ShowCard.module.css";
-import { SyncLoader } from "react-spinners";
+import { CircularProgress } from "@mui/material";
 import { useAuth } from "./context/AuthProvider";
 import { useAlert } from "./context/AlertProvider";
+import { grid } from "@mui/system";
 
 const ShowCard = ({ show: currentShow, container }) => {
-  const { bookmark, onBookmarked } = useShow();
-  const [status] = bookmark.filter((item) => item.title === currentShow.title);
-  const isBookmarked = status.bookmarkStatus;
-  const { user } = useAuth();
+  const { bookmark, onBookmarked, loading } = useShow();
+  const { userId } = useAuth();
   const { onOpen } = useAlert();
+
+  let isBookmarked;
+  if (bookmark.length !== 0) {
+    const [status] = bookmark.filter(
+      (item) => item.title === currentShow.title
+    );
+    isBookmarked = status && status.bookmarkStatus;
+  } else {
+    isBookmarked = false;
+  }
 
   const resolutionSelector =
     container === "trending" ? (
@@ -72,15 +81,21 @@ const ShowCard = ({ show: currentShow, container }) => {
   );
 
   function handleBookmark() {
-    if (!user) {
+    if (!userId) {
       onOpen("warning", "Sign-up or login to bookmark");
     } else {
       onBookmarked(currentShow.title);
     }
   }
 
-  return currentShow === undefined ? (
-    <SyncLoader />
+  return loading ? (
+    <div style={{ display: "grid", placeContent: "center" }}>
+      <CircularProgress
+        sx={{
+          color: "red",
+        }}
+      />
+    </div>
   ) : (
     <article
       className={`${styles.showCard} ${

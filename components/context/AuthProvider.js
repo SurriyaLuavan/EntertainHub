@@ -8,7 +8,7 @@ export default function AuthProvider({ children }) {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <AuthContext.Provider value={{ user: user ? user.email : null }}>
+    <AuthContext.Provider value={{ userId: user ? user.uid : false }}>
       {children}
     </AuthContext.Provider>
   );

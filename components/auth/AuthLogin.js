@@ -92,6 +92,13 @@ const AuthLogin = () => {
 
   return (
     <AuthLayout type="Login" onSubmit={handleSubmit}>
+      {user && (
+        <div
+          className={` ${styles.errorMessage} ${styles.fsError} text-accent fw-light`}
+        >
+          {user.email}
+        </div>
+      )}
       <label htmlFor="email" className={styles.inputFieldContainer}>
         <input
           type="email"
