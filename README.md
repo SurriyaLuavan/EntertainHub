@@ -18,19 +18,19 @@ This is a solution to the [Entertainment web app](https://www.frontendmentor.io/
 
 ### Live Site URL : [Demo](https://entertain-hub-ebon.vercel.app/)
 
-## **Screenshots**
+## **Screen Record**
 
-### **Desktop:**
+![Screen Record GIF](./public/screenrecord.gif)
 
-![Desktop Version](./public/screenshots/Desktop.jpeg)
+<!-- ![Desktop Version](./public/screenshots/Desktop.jpeg) -->
 
-### **Tablet:**
+<!-- ### **Tablet:** -->
 
-![Tablet Version](./public/screenshots/Tablet.jpeg)
+<!-- ![Tablet Version](./public/screenshots/Tablet.jpeg) -->
 
-### **Mobile:**
-
-![Mobile Version](./public/screenshots/Mobile.jpeg)
+<!-- ### **Mobile:** -->
+<!--
+![Mobile Version](./public/screenshots/Mobile.jpeg) -->
 
 ## **Technologies Used**
 
