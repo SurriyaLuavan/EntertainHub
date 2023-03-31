@@ -6,40 +6,30 @@ This is a solution to the [Entertainment web app](https://www.frontendmentor.io/
 
 ## **Features**
 
-- **Displaying Movies and TV Series**: EntertainHub allows users to browse and discover a wide range of movies and TV series, with detailed information on each show such as the title, synopsis, cast, and rating.
+- **Displaying Movies and TV Series**: EntertainHub allows users to browse and discover a wide range of movies and TV series.
 
-- **User Authentication using Firebase**: EntertainHub uses Firebase for user authentication, allowing users to create an account or sign in with their Google account. Firebase provides a secure and easy-to-use authentication system that integrates seamlessly with EntertainHub.
+- **User Authentication using Firebase**: EntertainHub uses Firebase for user authentication, allowing users to create an account or sign in with their EntertainHub account. Firebase provides a secure and easy-to-use authentication system that integrates seamlessly with EntertainHub.
 
-- **User Bookmarking**: EntertainHub allows users to bookmark their favorite shows so that they can easily find them again later. The bookmarking feature is implemented using Firebase's real-time database, allowing users to save and retrieve their bookmarks across different devices.
+- **User Bookmarking**: EntertainHub allows users to bookmark their favorite shows so that they can easily find them again later. The bookmarking feature is implemented using Firebase's Cloud Firestore, allowing users to save and retrieve their bookmarks across different devices.
 
-- **Show Search**: EntertainHub includes a search feature that allows users to find shows quickly and easily. The search function is implemented using React's built-in state management and MUI's input components.
+- **Show Search**: EntertainHub includes a search feature that allows users to find shows quickly and easily. The search function is implemented using React's built-in state management.
 
-- **Fully Responsive Design**: EntertainHub's user interface is designed to work seamlessly on all devices, including mobile, tablet, and desktop. The responsive design is implemented using Next.js and MUI's responsive grid system.
+- **Fully Responsive Design**: EntertainHub's user interface is designed to work seamlessly on all devices, including mobile, tablet, and desktop. The responsive design is implemented using CSS grid, Flexbox and Media queries.
 
-### Live Site URL : [Demo](https://entertain-hub-ebon.vercel.app/)
-
-## **Screen Record**
+## **Quick demo of EntertainHub in action**
 
 ![Screen Record GIF](./public/screenrecord.gif)
 
-<!-- ![Desktop Version](./public/screenshots/Desktop.jpeg) -->
-
-<!-- ### **Tablet:** -->
-
-<!-- ![Tablet Version](./public/screenshots/Tablet.jpeg) -->
-
-<!-- ### **Mobile:** -->
-<!--
-![Mobile Version](./public/screenshots/Mobile.jpeg) -->
+### Live Site URL : [Demo](https://entertain-hub-ebon.vercel.app/)
 
 ## **Technologies Used**
 
 ### **Frontend Technologies**
 
-- Next.js Framework
-- React Library
-- CSS Grid and Flexbox
-- Semantic HTML5
+- Next.js Framework - Open-source React framework for building server-rendered web applications
+- React Library - Popular JavaScript library for building user interfaces
+- CSS Grid and Flexbox - Layout systems for designing and positioning elements on a web page
+- Semantic HTML5 - HTML tags with semantic meaning for improved search engine understanding and accessibility.
 
 ### **Backend Technologies**
 
@@ -54,8 +44,6 @@ This is a solution to the [Entertainment web app](https://www.frontendmentor.io/
 
 ## **What I Learned**
 
-While working on EntertainHub, I gained experience in developing a responsive web application with a modern and intuitive interface. I also had the opportunity to work with several technologies and libraries that have expanded my skillset as a developer.
-
 Some of the key takeaways from this project include:
 
 - React hooks, such as useContext, useEffect, and useRef, which helped me to manage state, handle side effects, and access DOM elements more efficiently.
@@ -64,7 +52,7 @@ Some of the key takeaways from this project include:
 - Formik and Yup, two libraries that made it easy to create forms with input validation and error handling, and helped me to streamline the user input process.
 - MUI, a UI library for React, which provided pre-built components and styles that enabled me to create a cohesive and visually appealing interface.
 
-Through this project, I was able to demonstrate my proficiency in React and showcase my ability to develop a full-stack web application using various frontend and backend technologies. I also gained experience in working with Git, linting tools, and other development tools that are essential for building robust and maintainable applications.
+Through this project, I was able to demonstrate my proficiency in React and showcase my ability to develop a full-stack web application using various frontend and backend technologies.
 
 ## **Roadmap for Future Development**
 
