@@ -83,9 +83,9 @@ const AuthSignup = () => {
 
       if (type === "success") {
         formik.handleReset();
-        // setTimeout(() => {
-        //   router.push("/");
-        // }, 1500);
+        setTimeout(() => {
+          router.push("/");
+        }, 1500);
       }
     }
   }, [user, error]);

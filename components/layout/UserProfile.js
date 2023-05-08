@@ -17,9 +17,9 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
     const success = await signOut();
     if (success) {
       onOpen("success", "Logout successful!");
-      // setTimeout(() => {
-      //   router.push("/");
-      // }, 1500);
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
     } else {
       onOpen("error", "Logout failed!");
     }
