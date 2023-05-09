@@ -87,7 +87,7 @@ const AuthLogin = () => {
         formik.handleReset();
         setTimeout(() => {
           router.push("/");
-        }, 1500);
+        }, 500);
       }
       onOpen(type, message);
     }

@@ -19,7 +19,7 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
       onOpen("success", "Logout successful!");
       setTimeout(() => {
         router.push("/");
-      }, 1500);
+      }, 500);
     } else {
       onOpen("error", "Logout failed!");
     }

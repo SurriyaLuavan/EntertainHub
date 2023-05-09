@@ -85,7 +85,7 @@ const AuthSignup = () => {
         formik.handleReset();
         setTimeout(() => {
           router.push("/");
-        }, 1500);
+        }, 500);
       }
     }
   }, [user, error]);
