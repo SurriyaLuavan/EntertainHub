@@ -4,7 +4,6 @@ import Bookmark from "@/components/bookmarks/Bookmark";
 import { useAuth } from "@/components/context/AuthProvider";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { CircularProgress } from "@mui/material";
 
 export default function Bookmarks() {
   const { userId } = useAuth();

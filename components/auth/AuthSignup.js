@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "/styles/FormField.module.css";
 import AuthLayout from "@/components/auth/AuthLayout";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
@@ -21,6 +22,7 @@ const AuthSignup = () => {
     password: true,
     confirm: true,
   });
+  const router = useRouter();
 
   function resetFocus() {
     Object.keys(focus).forEach((item) => {
@@ -72,20 +74,21 @@ const AuthSignup = () => {
         error && error.code === "auth/email-already-in-use"
           ? "Email already exits!"
           : "Sign-up successful!";
+      onOpen(type, message);
+
+      if (!loading && !error && user) {
+        const data = formatUser(user.user);
+        createUser(user.user.uid, data);
+      }
 
       if (type === "success") {
         formik.handleReset();
+        setTimeout(() => {
+          router.push("/");
+        }, 500);
       }
-      onOpen(type, message);
     }
   }, [user, error]);
-
-  useEffect(() => {
-    if (!loading && !error && user) {
-      const data = formatUser(user.user);
-      createUser(user.user.uid, data);
-    }
-  }, [user]);
 
   return (
     <AuthLayout type="Sign Up" onSubmit={handleSubmit}>

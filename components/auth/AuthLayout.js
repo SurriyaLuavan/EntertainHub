@@ -1,7 +1,5 @@
-import { Alert } from "@mui/material";
 import Link from "next/link";
 import AlertCard from "../AlertCard";
-import AlertProvider from "../context/AlertProvider";
 import styles from "/styles/AuthLayout.module.css";
 
 const AuthLayout = ({ type, children, onSubmit }) => {

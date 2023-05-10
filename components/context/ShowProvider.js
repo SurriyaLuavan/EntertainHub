@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useDocument } from "react-firebase-hooks/firestore";
-import { getFirestore, doc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "./AuthProvider";
 import { updateUser } from "@/lib/db";

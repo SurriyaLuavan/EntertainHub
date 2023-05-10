@@ -5,9 +5,11 @@ import styles from "/styles/UserProfile.module.css";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
 import { useAlert } from "../context/AlertProvider";
+import { useRouter } from "next/router";
 
 const UserProfile = ({ showAccount, setShowAccount }) => {
   const { userId } = useAuth();
+  const router = useRouter();
   const { onOpen } = useAlert();
   const [signOut, loading, error] = useSignOut(auth);
 
@@ -15,6 +17,9 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
     const success = await signOut();
     if (success) {
       onOpen("success", "Logout successful!");
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
     } else {
       onOpen("error", "Logout failed!");
     }
