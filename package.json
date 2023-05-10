@@ -12,6 +12,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.15",
+    "axios": "^1.4.0",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.4",
     "firebase": "^9.18.0",

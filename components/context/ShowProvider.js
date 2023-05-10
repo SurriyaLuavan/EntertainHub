@@ -1,13 +1,13 @@
 import { createContext, useContext, useState } from "react";
 import { useDocument } from "react-firebase-hooks/firestore";
-import { getFirestore, doc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "./AuthProvider";
 import { updateUser } from "@/lib/db";
 
 const ShowContext = createContext();
 
-export default function ShowProvider({ children, data }) {
+export default function ShowProvider({ children }) {
   const { userId } = useAuth();
   const [docData, loading, error] = useDocument(
     doc(db, "users", userId ? userId : "No user")
@@ -57,7 +57,6 @@ export default function ShowProvider({ children, data }) {
       value={{
         bookmark: bookmarked,
         onBookmarked: handleBookmark,
-        data: data,
         loading,
         docData: bookmarkData,
       }}

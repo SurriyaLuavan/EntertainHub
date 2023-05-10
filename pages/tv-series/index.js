@@ -1,8 +1,11 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
 import TvSeriesContainer from "../../components/tv-series/TvSeriesContainer";
+import axios from "axios";
 
-export default function TvSeries() {
+export default function TvSeries({ shows }) {
+  const { tvSeries: tvSeriesData } = shows;
+
   return (
     <>
       <Head>
@@ -12,8 +15,23 @@ export default function TvSeries() {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <Layout>
-        <TvSeriesContainer />
+        <TvSeriesContainer data={tvSeriesData} />
       </Layout>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      shows: await getTvShows(),
+    },
+  };
+}
+
+async function getTvShows() {
+  const tvShowsEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/tvseries`;
+  const { data } = await axios.get(tvShowsEndpoint);
+
+  return data;
 }

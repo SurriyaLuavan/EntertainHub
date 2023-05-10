@@ -2,6 +2,7 @@ import AuthLayout from "@/components/auth/AuthLayout";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "/styles/FormField.module.css";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -22,6 +23,7 @@ const AuthLogin = () => {
     email: true,
     password: true,
   });
+  const router = useRouter();
 
   function resetFocus() {
     Object.keys(focus).forEach((item) => {
@@ -83,6 +85,9 @@ const AuthLogin = () => {
 
       if (type === "success") {
         formik.handleReset();
+        setTimeout(() => {
+          router.push("/");
+        }, 500);
       }
       onOpen(type, message);
     }

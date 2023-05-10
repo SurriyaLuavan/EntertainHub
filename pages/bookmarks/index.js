@@ -2,13 +2,11 @@ import Head from "next/head";
 import Layout from "@/components/layout/Layout";
 import Bookmark from "@/components/bookmarks/Bookmark";
 import { useAuth } from "@/components/context/AuthProvider";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { CircularProgress } from "@mui/material";
+import axios from "axios";
 
-export default function Bookmarks() {
+export default function Bookmarks({ shows }) {
   const { userId } = useAuth();
-  const router = useRouter();
+  const [moviesData, tvSeriesData] = shows;
 
   return (
     <>
@@ -27,12 +25,40 @@ export default function Bookmarks() {
             </p>
           ) : (
             <>
-              <Bookmark category="Movie" />
-              <Bookmark category="TV Series" />{" "}
+              <Bookmark data={moviesData.movies} category="Movie" />
+              <Bookmark
+                data={tvSeriesData.tvSeries}
+                category="TV Series"
+              />{" "}
             </>
           )}
         </div>
       </Layout>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      shows: await getShowCollection(),
+    },
+  };
+}
+
+async function getShowCollection() {
+  const moviesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movies`;
+  const tvSeriesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/tvseries`;
+
+  const urls = [moviesEndpoint, tvSeriesEndpoint];
+
+  const promises = urls.map((url) => axios.get(url));
+
+  try {
+    const res = await Promise.all(promises);
+    const data = res.map((item) => item.data);
+    return data;
+  } catch (err) {
+    return { error: err };
+  }
 }

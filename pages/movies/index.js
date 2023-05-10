@@ -4,8 +4,10 @@ import Layout from "@/components/layout/Layout";
 import MovieContainer from "@/components/movies/MovieContainer";
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
+import axios from "axios";
 
-export default function Movies() {
+export default function Movies({ shows }) {
+  const { movies: moviesData } = shows;
   return (
     <>
       <Head>
@@ -15,8 +17,23 @@ export default function Movies() {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <Layout>
-        <MovieContainer />
+        <MovieContainer data={moviesData} />
       </Layout>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      shows: await getTvShows(),
+    },
+  };
+}
+
+async function getTvShows() {
+  const moviesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movies`;
+  const { data } = await axios.get(moviesEndpoint);
+
+  return data;
 }

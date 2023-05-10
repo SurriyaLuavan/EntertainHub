@@ -1,11 +1,7 @@
-import { useShow } from "../context/ShowProvider";
 import ShowCard from "../ShowCard";
 import uuid from "react-uuid";
 
-const Recommendations = () => {
-  const { data } = useShow();
-  const recommendCollection = data.filter((item) => !item.isTrending);
-
+const Recommendations = ({ data: recommendCollection }) => {
   return (
     <section>
       <h1 className="padding-inline fs-l-primary-heading fw-light">

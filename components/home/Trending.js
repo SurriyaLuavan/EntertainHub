@@ -1,12 +1,8 @@
-import { useShow } from "../context/ShowProvider";
 import ScrollContainer from "react-indiana-drag-scroll";
 import uuid from "react-uuid";
 import ShowCard from "../ShowCard";
 
-const Trending = () => {
-  const { data } = useShow();
-  const trendingCollection = data.filter((item) => item.isTrending);
-
+const Trending = ({ data: trendingCollection }) => {
   return (
     <section>
       <h1 className="padding-inline fs-l-primary-heading fw-light">Trending</h1>

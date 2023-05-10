@@ -2,8 +2,11 @@ import Head from "next/head";
 import Layout from "@/components/layout/Layout";
 import Trending from "@/components/home/Trending";
 import Recommendations from "@/components/home/Recommendations";
+import axios from "axios";
 
-export default function Home() {
+export default function Home({ shows }) {
+  const [trendingData, recommendedData] = shows;
+
   return (
     <>
       <Head>
@@ -14,10 +17,35 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="showListContainer ">
-          <Trending />
-          <Recommendations />
+          <Trending data={trendingData.trendingShows} />
+          <Recommendations data={recommendedData.recommendedShows} />
         </div>
       </Layout>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      shows: await getHomeShow(),
+    },
+  };
+}
+
+async function getHomeShow() {
+  const trendingEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/trending`;
+  const recommendationsEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/recommendations`;
+
+  const urls = [trendingEndpoint, recommendationsEndpoint];
+
+  const promises = urls.map((url) => axios.get(url));
+
+  try {
+    const res = await Promise.all(promises);
+    const data = res.map((item) => item.data);
+    return data;
+  } catch (err) {
+    return { error: err };
+  }
 }

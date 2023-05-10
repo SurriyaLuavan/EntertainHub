@@ -6,14 +6,13 @@ import styles from "/styles/Layout.module.css";
 import AlertProvider from "../context/AlertProvider";
 import AlertCard from "../AlertCard";
 import ShowProvider from "../context/ShowProvider";
-import data from "/data.json";
 
 const Layout = ({ children }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
     <AlertProvider>
-      <ShowProvider data={data}>
+      <ShowProvider>
         <main className={styles.layoutContainer}>
           <AlertCard />
           <NavBar />

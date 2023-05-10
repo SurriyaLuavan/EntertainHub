@@ -3,16 +3,20 @@ import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
 import { CircularProgress } from "@mui/material";
 
-const Bookmark = ({ category }) => {
-  const { bookmark, data, loading } = useShow();
+const Bookmark = ({ category, data }) => {
+  const { bookmark, loading } = useShow();
 
-  const bookmarkedCollection = data.filter((item) =>
+  const bookmarked = data.filter((item) =>
     bookmark.some((item2) => item.title === item2.title)
   );
 
-  const bookmarked = bookmarkedCollection.filter(
-    (item) => item.category === category
-  );
+  // const bookmarkedCollection = data.filter((item) =>
+  //   bookmark.some((item2) => item.title === item2.title)
+  // );
+
+  // const bookmarked = bookmarkedCollection.filter(
+  //   (item) => item.category === category
+  // );
 
   return (
     <article>
