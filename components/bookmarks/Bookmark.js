@@ -1,4 +1,4 @@
-import { useShow } from "@/components/context/ShowProvider";
+import { useShow } from "@/context/ShowProvider";
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
 import { CircularProgress } from "@mui/material";

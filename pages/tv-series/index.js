@@ -1,11 +1,11 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
-import TvSeriesContainer from "../../components/tv-series/TvSeriesContainer";
+// import TvSeriesContainer from "../../components/tv-series/TvSeriesContainer";
+import GenreContainer from "@/components/GenreContainer";
 import axios from "axios";
 
-export default function TvSeries({ shows }) {
-  const { tvSeries: tvSeriesData } = shows;
-
+export default function TvSeries({ genreList }) {
+  const { genres } = genreList;
   return (
     <>
       <Head>
@@ -15,23 +15,22 @@ export default function TvSeries({ shows }) {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <Layout>
-        <TvSeriesContainer data={tvSeriesData} />
+        <GenreContainer data={genres} category="TV Series" />
       </Layout>
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
-      shows: await getTvShows(),
+      genreList: await getTVSeriesGenreList(),
     },
   };
 }
 
-async function getTvShows() {
-  const tvShowsEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/tvseries`;
-  const { data } = await axios.get(tvShowsEndpoint);
-
+async function getTVSeriesGenreList() {
+  const tvSeriesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/tvseries/genre`;
+  const { data } = await axios.get(tvSeriesEndpoint);
   return data;
 }

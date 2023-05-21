@@ -3,7 +3,7 @@ import styles from "/styles/NavBar.module.css";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Link from "next/link";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../../context/AuthProvider";
 
 const NavBar = () => {
   const router = useRouter();

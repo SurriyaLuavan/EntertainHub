@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../../context/AuthProvider";
 import styles from "/styles/UserProfile.module.css";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
-import { useAlert } from "../context/AlertProvider";
+import { useAlert } from "../../context/AlertProvider";
 import { useRouter } from "next/router";
 
 const UserProfile = ({ showAccount, setShowAccount }) => {

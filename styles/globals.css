@@ -155,6 +155,20 @@ body {
   max-width: 1440px;
 }
 
+.headingContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.categoryBlock {
+  background-color: var(--clr-primary-200);
+  color: var(--clr-neutral-100);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.4rem;
+  margin-top: 0.4rem;
+}
+
 .showCardContainer.alignSearch {
   grid-template-columns: repeat(auto-fit, 160px);
 }

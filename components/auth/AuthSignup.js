@@ -8,7 +8,7 @@ import { useState } from "react";
 import { auth } from "@/lib/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
-import { useAlert } from "@/components/context/AlertProvider";
+import { useAlert } from "@/context/AlertProvider";
 import { CircularProgress } from "@mui/material";
 import { createUser } from "@/lib/db";
 import { formatUser } from "@/lib/db";

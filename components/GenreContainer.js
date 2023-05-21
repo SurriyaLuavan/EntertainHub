@@ -1,21 +1,21 @@
-import ShowCard from "@/components/ShowCard";
+import GenreCard from "./GenreCard";
 import uuid from "react-uuid";
 
-const TvSeriesContainer = ({ data: seriesCollection }) => {
+const GenreContainer = ({ data: currentGenreShows, category }) => {
   return (
     <div className="showListContainer">
       <div className="sectionWrapper">
         <h1 className="padding-inline fs-l-primary-heading fw-light">
-          TV Series
+          {category} Genre
         </h1>
         <div className="showCardContainer | padding-inline padding-block-top padding-block-bottom">
-          {seriesCollection.map((item) => (
-            <ShowCard show={item} key={uuid()} />
-          ))}
+          {currentGenreShows.map((item) => {
+            return <GenreCard category={category} genre={item} key={uuid()} />;
+          })}
         </div>
       </div>
     </div>
   );
 };
 
-export default TvSeriesContainer;
+export default GenreContainer;

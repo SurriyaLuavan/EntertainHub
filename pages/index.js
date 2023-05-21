@@ -1,11 +1,28 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
 import Trending from "@/components/home/Trending";
-import Recommendations from "@/components/home/Recommendations";
+import MovieCollections from "@/components/home/MovieCollections";
 import axios from "axios";
+import TVCollections from "@/components/home/TVCollection";
 
 export default function Home({ shows }) {
-  const [trendingData, recommendedData] = shows;
+  const [trendingData, nowPlayingData, airingTodayData] = shows;
+
+  const movieCollection = [
+    {
+      title: "Now Playing",
+      category: "Movie",
+      data: nowPlayingData.nowPlayingShows,
+    },
+  ];
+
+  const tvCollection = [
+    {
+      title: "Airing Today",
+      category: "TV Series",
+      data: airingTodayData.airingTodayShows,
+    },
+  ];
 
   return (
     <>
@@ -18,26 +35,28 @@ export default function Home({ shows }) {
       <Layout>
         <div className="showListContainer ">
           <Trending data={trendingData.trendingShows} />
-          <Recommendations data={recommendedData.recommendedShows} />
+          <MovieCollections movieCollection={movieCollection} />
+          <TVCollections tvCollection={tvCollection} />
         </div>
       </Layout>
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
-      shows: await getHomeShow(),
+      shows: await getHomeShows(),
     },
   };
 }
 
-async function getHomeShow() {
+async function getHomeShows() {
   const trendingEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/trending`;
-  const recommendationsEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/recommendations`;
+  const nowPlayingEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movies/now_playing`;
+  const airingTodayEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/tvseries/airing_today`;
 
-  const urls = [trendingEndpoint, recommendationsEndpoint];
+  const urls = [trendingEndpoint, nowPlayingEndpoint, airingTodayEndpoint];
 
   const promises = urls.map((url) => axios.get(url));
 

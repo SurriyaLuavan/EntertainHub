@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
-import { useAlert } from "@/components/context/AlertProvider";
+import { useAlert } from "@/context/AlertProvider";
 import { CircularProgress } from "@mui/material";
 
 const errorCode = {

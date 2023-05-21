@@ -1,13 +1,10 @@
 import Head from "next/head";
-import { useShow } from "@/components/context/ShowProvider";
 import Layout from "@/components/layout/Layout";
-import MovieContainer from "@/components/movies/MovieContainer";
-import ShowCard from "@/components/ShowCard";
-import uuid from "react-uuid";
+import GenreContainer from "@/components/GenreContainer";
 import axios from "axios";
 
-export default function Movies({ shows }) {
-  const { movies: moviesData } = shows;
+export default function Movies({ genreList }) {
+  const { genres } = genreList;
   return (
     <>
       <Head>
@@ -17,23 +14,22 @@ export default function Movies({ shows }) {
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <Layout>
-        <MovieContainer data={moviesData} />
+        <GenreContainer data={genres} category="Movie" />
       </Layout>
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
-      shows: await getTvShows(),
+      genreList: await getMovieGenreList(),
     },
   };
 }
 
-async function getTvShows() {
-  const moviesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movies`;
+async function getMovieGenreList() {
+  const moviesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movies/genre`;
   const { data } = await axios.get(moviesEndpoint);
-
   return data;
 }

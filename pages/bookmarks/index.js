@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "@/components/layout/Layout";
 import Bookmark from "@/components/bookmarks/Bookmark";
-import { useAuth } from "@/components/context/AuthProvider";
+import { useAuth } from "@/context/AuthProvider";
 import axios from "axios";
 
 export default function Bookmarks({ shows }) {

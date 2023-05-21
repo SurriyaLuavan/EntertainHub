@@ -1,5 +1,5 @@
 import Head from "next/head";
-import AlertProvider from "@/components/context/AlertProvider";
+import AlertProvider from "@/context/AlertProvider";
 import AuthSignup from "@/components/auth/AuthSignup";
 
 export default function Signup() {
