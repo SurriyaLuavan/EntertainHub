@@ -1,41 +1,41 @@
 import { useShow } from "../context/ShowProvider";
 import styles from "/styles/ShowCard.module.css";
-import { CircularProgress } from "@mui/material";
 import { useAuth } from "../context/AuthProvider";
 import { useAlert } from "../context/AlertProvider";
 import Image from "next/image";
-import { useState } from "react";
+import Skeleton from "@mui/material/Skeleton";
 
 const ShowCard = ({ show: currentShow, container }) => {
-  const { bookmark, onBookmarked, loading } = useShow();
-  // const [imageLoading, setImageLoading] = useState(false);
-
+  const { bookmark, onBookmarked } = useShow();
+  // const [imageLoading, setImageLoading] = useState(true);
   const { userId } = useAuth();
   const { onOpen } = useAlert();
 
   let isBookmarked;
+
   if (bookmark.length !== 0) {
-    const [status] = bookmark.filter(
-      (item) => item.title === currentShow.title
-    );
-    isBookmarked = status && status.bookmarkStatus;
+    isBookmarked = bookmark.some((item) => item.title === currentShow.title);
   } else {
     isBookmarked = false;
   }
 
   // const onLoadingCompleteFunction = (e) => {
   //   console.log("Loading Complete");
-  //   setImageLoading(true);
+  //   setImageLoading(false);
   //   typeof onLoadingComplete === "function" && onLoadingComplete(e);
   // };
 
   const resolutionSelector = (
     <Image
-      src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_ENDPOINT}${currentShow.backdrop_path}`}
+      src={
+        currentShow.backdrop_path === "N/A"
+          ? "/assets/image-not-available.jpg"
+          : `${process.env.NEXT_PUBLIC_TMDB_IMAGE_ENDPOINT}${currentShow.backdrop_path}`
+      }
       fill={true}
       className={`${styles.thumbnail} ${
         container === "trending" && styles.trendingCard
-      }`}
+      } ${currentShow.backdrop_path === "N/A" && styles.filter}`}
       loading="lazy"
       // onLoadingComplete={onLoadingCompleteFunction}
       alt="thumbnail"
@@ -113,75 +113,79 @@ const ShowCard = ({ show: currentShow, container }) => {
     if (!userId) {
       onOpen("warning", "Sign-up or login to bookmark");
     } else {
-      onBookmarked(currentShow.title);
+      onBookmarked(currentShow.show_id || currentShow._id, currentShow.title);
     }
   }
 
-  return loading ? (
-    <div style={{ display: "grid", placeContent: "center" }}>
-      <CircularProgress
-        sx={{
-          color: "red",
-        }}
-      />
-    </div>
-  ) : (
+  return (
     <article
       className={`${styles.showCard} ${
         container === "trending" && styles.trendingCard
       }`}
     >
-      <button className={styles.bookmarkButton} onClick={handleBookmark}>
-        {bookmarkIcon}
-      </button>
-      <div
-        className={`${styles.thumbnailContainer} ${
-          container === "trending" && styles.trendingCard
-        }`}
-      >
-        {resolutionSelector}
-        <button className={styles.playButton}>
-          <div className={styles.textWrapper}>
-            <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M15 0C6.713 0 0 6.713 0 15c0 8.288 6.713 15 15 15 8.288 0 15-6.712 15-15 0-8.287-6.712-15-15-15Zm-3 21V8l9 6.5-9 6.5Z"
-                fill="#FFF"
-              />
-            </svg>
-            Play
+      {false ? (
+        <Skeleton
+          sx={{ bgcolor: "grey.800", height: "100%", borderRadius: "8px" }}
+          animation="wave"
+          variant="rectangular"
+        />
+      ) : (
+        <>
+          <button className={styles.bookmarkButton} onClick={handleBookmark}>
+            {bookmarkIcon}
+          </button>
+          <div
+            className={`${styles.thumbnailContainer} ${
+              container === "trending" && styles.trendingCard
+            }`}
+          >
+            {resolutionSelector}
+            <button className={styles.playButton}>
+              <div className={styles.textWrapper}>
+                <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15 0C6.713 0 0 6.713 0 15c0 8.288 6.713 15 15 15 8.288 0 15-6.712 15-15 0-8.287-6.712-15-15-15Zm-3 21V8l9 6.5-9 6.5Z"
+                    fill="#FFF"
+                  />
+                </svg>
+                Play
+              </div>
+            </button>
           </div>
-        </button>
-      </div>
-      <div
-        className={`${styles.infoContainer} ${
-          container === "trending" && styles.trendingCard
-        } `}
-      >
-        <p
-          className={`${
-            container === "trending" ? "fs-m-body" : "fs-s-body"
-          } fw-light`}
-        >
-          {getYear(currentShow.release_date)}
-          <span className={styles.inlineSpan}>
-            •{categoryIcon}
-            {currentShow.media_type}
-          </span>
-          <span className={styles.inlineSpan}>
-            • {ratingIcon}
-            {currentShow.vote_average > 0 ? currentShow.vote_average : "N/A"}
-          </span>
-        </p>
-        <h2
-          className={`${
-            container === "trending"
-              ? "fs-s-secondary-heading"
-              : "fs-xs-secondary-heading"
-          } fw-regular`}
-        >
-          {currentShow.title}
-        </h2>
-      </div>
+          <div
+            className={`${styles.infoContainer} ${
+              container === "trending" && styles.trendingCard
+            } `}
+          >
+            <p
+              className={`${
+                container === "trending" ? "fs-m-body" : "fs-s-body"
+              } fw-light`}
+            >
+              {getYear(currentShow.release_date)}
+              <span className={styles.inlineSpan}>
+                •{categoryIcon}
+                {currentShow.media_type}
+              </span>
+              <span className={styles.inlineSpan}>
+                • {ratingIcon}
+                {currentShow.vote_average > 0
+                  ? currentShow.vote_average
+                  : "N/A"}
+              </span>
+            </p>
+            <h2
+              className={`${
+                container === "trending"
+                  ? "fs-s-secondary-heading"
+                  : "fs-xs-secondary-heading"
+              } fw-regular`}
+            >
+              {currentShow.title}
+            </h2>
+          </div>{" "}
+        </>
+      )}
     </article>
   );
 };

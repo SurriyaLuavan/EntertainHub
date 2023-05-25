@@ -11,6 +11,7 @@ const TVCollections = ({ tvCollection }) => {
           title={item.title}
           category={item.category}
           data={item.data}
+          pathname={item.pathname}
         />
       ))}
     </>

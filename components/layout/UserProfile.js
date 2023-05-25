@@ -6,12 +6,14 @@ import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
 import { useAlert } from "../../context/AlertProvider";
 import { useRouter } from "next/router";
+import { useShow } from "@/context/ShowProvider";
 
 const UserProfile = ({ showAccount, setShowAccount }) => {
   const { userId } = useAuth();
   const router = useRouter();
   const { onOpen } = useAlert();
-  const [signOut, loading, error] = useSignOut(auth);
+  const { setBookmark } = useShow();
+  const [signOut] = useSignOut(auth);
 
   async function handleLogout() {
     const success = await signOut();
@@ -20,10 +22,11 @@ const UserProfile = ({ showAccount, setShowAccount }) => {
       setTimeout(() => {
         router.push("/");
       }, 500);
+      setBookmark([]);
     } else {
       onOpen("error", "Logout failed!");
     }
-    setShowAccount();
+    setShowAccount(false);
   }
 
   const imgSrc = userId ? "/assets/image-avatar.png" : "/assets/no-profile.png";

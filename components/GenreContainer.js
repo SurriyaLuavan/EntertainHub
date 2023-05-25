@@ -5,8 +5,11 @@ const GenreContainer = ({ data: currentGenreShows, category }) => {
   return (
     <div className="showListContainer">
       <div className="sectionWrapper">
-        <h1 className="padding-inline fs-l-primary-heading fw-light">
-          {category} Genre
+        <h1 className="headingContainer | padding-inline fs-l-primary-heading fw-light">
+          Genre{" "}
+          <span className="categoryBlock | fs-m-body fw-regular">
+            {category}
+          </span>
         </h1>
         <div className="showCardContainer | padding-inline padding-block-top padding-block-bottom">
           {currentGenreShows.map((item) => {

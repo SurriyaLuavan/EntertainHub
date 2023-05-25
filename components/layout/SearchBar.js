@@ -1,21 +1,19 @@
-import { useRouter } from "next/router";
 import styles from "/styles/SearchBar.module.css";
 
-const SearchBar = ({ searchValue, onChange, onBack }) => {
-  const router = useRouter();
+const SearchBar = ({ searchValue, onChange, onBack, category }) => {
   let searchPlaceholder;
 
-  switch (router.pathname) {
-    case "/":
+  switch (category) {
+    case "both":
       searchPlaceholder = "movies or TV series";
       break;
-    case "/movies":
+    case "movies":
       searchPlaceholder = "movies";
       break;
-    case "/tv-series":
+    case "tvseries":
       searchPlaceholder = "TV series";
       break;
-    case "/bookmarks":
+    case "bookmarks":
       searchPlaceholder = "bookmarked shows";
       break;
     default:

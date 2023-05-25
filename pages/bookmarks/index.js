@@ -2,11 +2,9 @@ import Head from "next/head";
 import Layout from "@/components/layout/Layout";
 import Bookmark from "@/components/bookmarks/Bookmark";
 import { useAuth } from "@/context/AuthProvider";
-import axios from "axios";
 
-export default function Bookmarks({ shows }) {
+export default function Bookmarks() {
   const { userId } = useAuth();
-  const [moviesData, tvSeriesData] = shows;
 
   return (
     <>
@@ -16,7 +14,7 @@ export default function Bookmarks({ shows }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/favicon.png" />
       </Head>
-      <Layout>
+      <Layout category="bookmarks">
         <div className="showListContainer">
           {!userId ? (
             <p className="padding-block-top padding-inline fs-m-primary-heading fw-light">
@@ -25,40 +23,12 @@ export default function Bookmarks({ shows }) {
             </p>
           ) : (
             <>
-              <Bookmark data={moviesData.movies} category="Movie" />
-              <Bookmark
-                data={tvSeriesData.tvSeries}
-                category="TV Series"
-              />{" "}
+              <Bookmark category="Movie" />
+              <Bookmark category="TV Series" />
             </>
           )}
         </div>
       </Layout>
     </>
   );
-}
-
-export async function getServerSideProps() {
-  return {
-    props: {
-      shows: await getShowCollection(),
-    },
-  };
-}
-
-async function getShowCollection() {
-  const moviesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movies`;
-  const tvSeriesEndpoint = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/tvseries`;
-
-  const urls = [moviesEndpoint, tvSeriesEndpoint];
-
-  const promises = urls.map((url) => axios.get(url));
-
-  try {
-    const res = await Promise.all(promises);
-    const data = res.map((item) => item.data);
-    return data;
-  } catch (err) {
-    return { error: err };
-  }
 }

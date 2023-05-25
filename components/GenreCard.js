@@ -5,7 +5,7 @@ import Image from "next/image";
 const GenreCard = ({ genre, category }) => {
   return (
     <Link
-      href={`/${category === "Movie" ? "movies" : "tv-series"}/genre/${
+      href={`/${category === "Movie" ? "movies" : "tvseries"}/genre/${
         genre.id
       }`}
     >

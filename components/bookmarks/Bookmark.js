@@ -1,30 +1,20 @@
-import { useShow } from "@/context/ShowProvider";
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
 import { CircularProgress } from "@mui/material";
+import { useShow } from "@/context/ShowProvider";
 
-const Bookmark = ({ category, data }) => {
-  const { bookmark, loading } = useShow();
-
-  const bookmarked = data.filter((item) =>
-    bookmark.some((item2) => item.title === item2.title)
-  );
-
-  // const bookmarkedCollection = data.filter((item) =>
-  //   bookmark.some((item2) => item.title === item2.title)
-  // );
-
-  // const bookmarked = bookmarkedCollection.filter(
-  //   (item) => item.category === category
-  // );
+const Bookmark = ({ category }) => {
+  const { bookmark } = useShow();
+  const bookmarked = bookmark.filter((item) => item.media_type === category);
 
   return (
     <article>
-      <h1 className="padding-inline fs-l-primary-heading fw-light">
-        Bookmarked {category === "Movie" ? "Movies" : "TV Series"}
+      <h1 className="headingContainer | padding-inline fs-l-primary-heading fw-light">
+        Bookmarks{" "}
+        <span className="categoryBlock | fs-m-body fw-regular">{category}</span>
       </h1>
       {bookmarked.length > 0 ? (
-        loading ? (
+        false ? (
           <div style={{ display: "grid", placeContent: "center" }}>
             <CircularProgress
               sx={{

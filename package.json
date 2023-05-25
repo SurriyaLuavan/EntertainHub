@@ -23,6 +23,8 @@
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-indiana-drag-scroll": "^2.2.0",
+    "react-loader-spinner": "^5.3.4",
+    "react-loading-skeleton": "^3.3.1",
     "react-spinners": "^0.13.8",
     "react-uuid": "^2.0.0",
     "swr": "^2.1.5",

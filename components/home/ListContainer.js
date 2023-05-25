@@ -1,19 +1,21 @@
 import React from "react";
 import ShowCard from "../ShowCard";
 import uuid from "react-uuid";
-import Image from "next/image";
 import Link from "next/link";
-// import { tvGenreList, movieGenreList } from "@/data/genres";
 
-const ListContainer = ({ title, category, data }) => {
-  const initalData = data.filter((item, index) => index < 6);
+const ListContainer = ({ title, category, data, pathname }) => {
+  const initalData = data.filter((_, index) => index < 8);
   return (
     <section>
       <h1 className="headingContainer | padding-inline fs-l-primary-heading fw-light">
         {title}{" "}
         <span className="categoryBlock | fs-m-body fw-regular">{category}</span>
       </h1>
-      <Link href={"/movies/now_playing"}>See More</Link>
+      <Link
+        href={`/${category === "Movie" ? "movies" : "tvseries"}/${pathname}`}
+      >
+        See More
+      </Link>
       <div className="showCardContainer | padding-inline padding-block-top padding-block-bottom">
         {initalData.map((item) => (
           <ShowCard show={item} key={uuid()} />

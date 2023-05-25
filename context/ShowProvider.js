@@ -1,64 +1,56 @@
-import { createContext, useContext, useState } from "react";
-import { useDocument } from "react-firebase-hooks/firestore";
-import { doc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
-import { updateUser } from "@/lib/db";
+import axios from "axios";
 
 const ShowContext = createContext();
 
 export default function ShowProvider({ children }) {
-  const { userId } = useAuth();
-  const [docData, loading, error] = useDocument(
-    doc(db, "users", userId ? userId : "No user")
-  );
-  const bookmarkData =
-    docData && docData.exists() ? docData.data().bookmark : [];
-  const bookmarked = bookmarkData.filter((item) => item.bookmarkStatus);
+  const { userEmail } = useAuth();
+  const [userBookmarks, setuserBookmarks] = useState([]);
+  // Check how to use useReducer
+  const [userId, setUserId] = useState("");
 
-  function handleBookmark(title) {
-    if (userId && docData && docData.exists()) {
-      const exist =
-        bookmarkData.length !== 0
-          ? bookmarkData.filter((item) => item.title === title)
-          : [];
+  useEffect(() => {
+    const options = {
+      url: `${process.env.NEXT_PUBLIC_USERS_ENDPOINT}`,
+      data: {
+        email: userEmail,
+      },
+    };
 
-      if (exist.length === 0) {
-        const [showItem] = data
-          .filter((item) => item.title === title)
-          .map((item) => {
-            return { title: item.title, bookmarkStatus: true };
-          });
-        const showData = {
-          bookmark: arrayUnion(showItem),
-        };
-        updateUser(userId, showData);
-      } else {
-        const [showItemOld] = exist;
-        const [showItem] = exist.map((item) => {
-          return {
-            ...item,
-            bookmarkStatus: !item.bookmarkStatus,
-          };
-        });
-        const showData = {
-          bookmark: arrayUnion(showItem),
-        };
-        updateUser(userId, showData);
-        updateUser(userId, {
-          bookmark: arrayRemove(showItemOld),
-        });
+    const getUser = async () => {
+      const res = await axios.post(options.url, options.data);
+      const data = res.data;
+      if (data) {
+        setuserBookmarks(data.bookmarks);
+        setUserId(data._id);
       }
+    };
+
+    if (userEmail) {
+      getUser();
     }
+  }, [userEmail]);
+
+  async function handleBookmark(showId) {
+    const options = {
+      url: `${process.env.NEXT_PUBLIC_USERS_ENDPOINT}/${userId}/bookmarks/${showId}`,
+    };
+
+    const res = await axios.patch(options.url);
+    const data = res.data;
+
+    setuserBookmarks(data.bookmarks);
   }
 
   return (
     <ShowContext.Provider
       value={{
-        bookmark: bookmarked,
+        bookmark: userBookmarks,
         onBookmarked: handleBookmark,
-        loading,
-        docData: bookmarkData,
+        setBookmark: (val) => setuserBookmarks(val),
+        // userBookmarks,
+        // userId,
       }}
     >
       {children}

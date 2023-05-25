@@ -11,6 +11,7 @@ const MovieCollections = ({ movieCollection }) => {
           title={item.title}
           category={item.category}
           data={item.data}
+          pathname={item.pathname}
         />
       ))}
     </>

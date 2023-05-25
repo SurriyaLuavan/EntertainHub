@@ -5,10 +5,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-  const [user, loading, error] = useAuthState(auth);
-
+  const [user] = useAuthState(auth);
   return (
-    <AuthContext.Provider value={{ userId: user ? user.uid : false }}>
+    <AuthContext.Provider
+      value={{
+        userId: user ? user.uid : "",
+        userEmail: user ? user.email : "",
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
