@@ -3,8 +3,14 @@ import Layout from "@/components/layout/Layout";
 import uuid from "react-uuid";
 import ShowCard from "@/components/ShowCard";
 import axios from "axios";
+import { useRouter } from "next/router";
+import Error from "next/error";
 
 export default function Genre({ currentGenreCollection }) {
+  const router = useRouter();
+  if (!router.isFallback && !currentGenreCollection) {
+    return <Error statusCode={404} />;
+  }
   const { currentGenreMovies, title } = currentGenreCollection;
   return (
     <>
@@ -47,7 +53,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
 
