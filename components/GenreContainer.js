@@ -11,7 +11,7 @@ const GenreContainer = ({ data: currentGenreShows, category }) => {
             {category}
           </span>
         </h1>
-        <div className="showCardContainer | padding-inline padding-block-top padding-block-bottom">
+        <div className="genreContainer | padding-inline padding-block-top">
           {currentGenreShows.map((item) => {
             return <GenreCard category={category} genre={item} key={uuid()} />;
           })}

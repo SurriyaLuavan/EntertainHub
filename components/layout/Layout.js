@@ -5,14 +5,15 @@ import SearchBar from "./SearchBar";
 import styles from "/styles/Layout.module.css";
 import AlertProvider from "../../context/AlertProvider";
 import AlertCard from "../AlertCard";
-import ShowProvider from "../../context/ShowProvider";
+import ShowProvider from "../../context/BookmarkProvider";
 import axios from "axios";
 import { useAuth } from "@/context/AuthProvider";
+import Footer from "./Footer";
 
 const Layout = ({ children, category }) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState();
-  const { userEmail } = useAuth();
+  const { userId } = useAuth();
 
   useEffect(() => {
     const options = {
@@ -21,7 +22,7 @@ const Layout = ({ children, category }) => {
       }/search`,
       params: {
         searchValue: searchValue,
-        userEmail: category === "bookmarks" && userEmail,
+        userId: category === "bookmarks" && userId,
       },
     };
 
@@ -35,7 +36,7 @@ const Layout = ({ children, category }) => {
     if (searchValue !== "") {
       fetchSearchShows();
     }
-  }, [searchValue, category, userEmail]);
+  }, [searchValue, category, userId]);
 
   return (
     <AlertProvider>
@@ -58,6 +59,7 @@ const Layout = ({ children, category }) => {
             />
           )}
         </main>
+        <Footer />
       </ShowProvider>
     </AlertProvider>
   );

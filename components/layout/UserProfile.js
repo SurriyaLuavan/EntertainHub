@@ -6,23 +6,24 @@ import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
 import { useAlert } from "../../context/AlertProvider";
 import { useRouter } from "next/router";
-import { useShow } from "@/context/ShowProvider";
+import { useBookmark } from "@/context/BookmarkProvider";
 
 const UserProfile = ({ showAccount, setShowAccount }) => {
-  const { userId } = useAuth();
+  const { setUserIdState, userId } = useAuth();
   const router = useRouter();
   const { onOpen } = useAlert();
-  const { setBookmark } = useShow();
+  const { setBookmark } = useBookmark();
   const [signOut] = useSignOut(auth);
 
   async function handleLogout() {
     const success = await signOut();
     if (success) {
       onOpen("success", "Logout successful!");
+      setBookmark([]);
+      setUserIdState("");
       setTimeout(() => {
         router.push("/");
       }, 500);
-      setBookmark([]);
     } else {
       onOpen("error", "Logout failed!");
     }

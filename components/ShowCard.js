@@ -1,4 +1,4 @@
-import { useShow } from "../context/ShowProvider";
+import { useBookmark } from "../context/BookmarkProvider";
 import styles from "/styles/ShowCard.module.css";
 import { useAuth } from "../context/AuthProvider";
 import { useAlert } from "../context/AlertProvider";
@@ -6,9 +6,8 @@ import Image from "next/image";
 import Skeleton from "@mui/material/Skeleton";
 
 const ShowCard = ({ show: currentShow, container }) => {
-  const { bookmark, onBookmarked } = useShow();
-  // const [imageLoading, setImageLoading] = useState(true);
-  const { userId } = useAuth();
+  const { bookmark, onBookmarked } = useBookmark();
+  const { userId, loading } = useAuth();
   const { onOpen } = useAlert();
 
   let isBookmarked;
@@ -19,12 +18,6 @@ const ShowCard = ({ show: currentShow, container }) => {
     isBookmarked = false;
   }
 
-  // const onLoadingCompleteFunction = (e) => {
-  //   console.log("Loading Complete");
-  //   setImageLoading(false);
-  //   typeof onLoadingComplete === "function" && onLoadingComplete(e);
-  // };
-
   const resolutionSelector = (
     <Image
       src={
@@ -33,11 +26,12 @@ const ShowCard = ({ show: currentShow, container }) => {
           : `${process.env.NEXT_PUBLIC_TMDB_IMAGE_ENDPOINT}${currentShow.backdrop_path}`
       }
       fill={true}
+      placeholder="blur"
+      blurDataURL={"/assets/image-placeholder.png"}
       className={`${styles.thumbnail} ${
         container === "trending" && styles.trendingCard
       } ${currentShow.backdrop_path === "N/A" && styles.filter}`}
       loading="lazy"
-      // onLoadingComplete={onLoadingCompleteFunction}
       alt="thumbnail"
     />
   );
@@ -123,7 +117,7 @@ const ShowCard = ({ show: currentShow, container }) => {
         container === "trending" && styles.trendingCard
       }`}
     >
-      {false ? (
+      {loading ? (
         <Skeleton
           sx={{ bgcolor: "grey.800", height: "100%", borderRadius: "8px" }}
           animation="wave"
@@ -140,7 +134,8 @@ const ShowCard = ({ show: currentShow, container }) => {
             }`}
           >
             {resolutionSelector}
-            <button className={styles.playButton}>
+
+            {/* <button className={styles.playButton}>
               <div className={styles.textWrapper}>
                 <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -150,7 +145,7 @@ const ShowCard = ({ show: currentShow, container }) => {
                 </svg>
                 Play
               </div>
-            </button>
+            </button> */}
           </div>
           <div
             className={`${styles.infoContainer} ${

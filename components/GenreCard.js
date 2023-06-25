@@ -9,9 +9,20 @@ const GenreCard = ({ genre, category }) => {
         genre.id
       }`}
     >
-      <div>
-        <Image src={genre.imageURL} alt="" width={150} height={150} />
-        <h2>{genre.name}</h2>
+      <div className="genreCardContainer">
+        <div className="imageContainer">
+          <Image
+            src={genre.imageURL}
+            alt="thumbnail"
+            placeholder="blur"
+            blurDataURL={"/assets/genre-placeholder.png"}
+            fill={true}
+            className="genreImage"
+          />
+        </div>
+        <h2 className="fs-s-secondary-heading fw-regular text-neutral-100">
+          {genre.name}
+        </h2>
       </div>
     </Link>
   );

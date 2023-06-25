@@ -5,7 +5,6 @@ import { ThreeDots } from "react-loader-spinner";
 const SearchResults = ({ searchValue, searchResults }) => {
   return (
     <>
-      {" "}
       {!searchResults ? (
         <section
           className="showListContainer"

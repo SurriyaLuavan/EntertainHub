@@ -1,16 +1,17 @@
-import { createContext, useContext } from "react";
-import { auth } from "@/lib/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-  const [user] = useAuthState(auth);
+  const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState("");
   return (
     <AuthContext.Provider
       value={{
-        userId: user ? user.uid : "",
-        userEmail: user ? user.email : "",
+        userId,
+        loading,
+        setUserIdState: (id) => setUserId(id),
+        setLoadingState: (state) => setLoading(state),
       }}
     >
       {children}

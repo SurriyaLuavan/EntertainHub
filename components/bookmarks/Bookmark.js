@@ -1,10 +1,10 @@
 import ShowCard from "@/components/ShowCard";
 import uuid from "react-uuid";
 import { CircularProgress } from "@mui/material";
-import { useShow } from "@/context/ShowProvider";
+import { useBookmark } from "@/context/BookmarkProvider";
 
 const Bookmark = ({ category }) => {
-  const { bookmark } = useShow();
+  const { bookmark } = useBookmark();
   const bookmarked = bookmark.filter((item) => item.media_type === category);
 
   return (
