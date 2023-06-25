@@ -1,5 +1,5 @@
 import { Slide, Snackbar, Alert } from "@mui/material";
-import { useAlert } from "./context/AlertProvider";
+import { useAlert } from "../context/AlertProvider";
 import { useMediaQuery } from "@mui/material";
 
 const AlertCard = () => {

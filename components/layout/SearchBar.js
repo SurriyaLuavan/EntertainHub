@@ -1,21 +1,19 @@
-import { useRouter } from "next/router";
 import styles from "/styles/SearchBar.module.css";
 
-const SearchBar = ({ searchValue, onChange, onBack }) => {
-  const router = useRouter();
+const SearchBar = ({ searchValue, onChange, onBack, category }) => {
   let searchPlaceholder;
 
-  switch (router.pathname) {
-    case "/":
+  switch (category) {
+    case "both":
       searchPlaceholder = "movies or TV series";
       break;
-    case "/movies":
+    case "movies":
       searchPlaceholder = "movies";
       break;
-    case "/tv-series":
+    case "tvseries":
       searchPlaceholder = "TV series";
       break;
-    case "/bookmarks":
+    case "bookmarks":
       searchPlaceholder = "bookmarked shows";
       break;
     default:
@@ -30,7 +28,7 @@ const SearchBar = ({ searchValue, onChange, onBack }) => {
             width="32"
             height="32"
             xmlns="http://www.w3.org/2000/svg"
-            enable-background="new 0 0 24 24"
+            enableBackground="new 0 0 24 24"
             viewBox="0 0 24 24"
           >
             <path

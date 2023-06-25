@@ -7,8 +7,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
-import { useAlert } from "@/components/context/AlertProvider";
+import { useAlert } from "@/context/AlertProvider";
 import { CircularProgress } from "@mui/material";
+import { useAuth } from "@/context/AuthProvider";
+import axios from "axios";
 
 const errorCode = {
   notFound: "auth/user-not-found",
@@ -23,6 +25,7 @@ const AuthLogin = () => {
     email: true,
     password: true,
   });
+  const { setLoadingState, setUserIdState } = useAuth();
   const router = useRouter();
 
   function resetFocus() {
@@ -65,6 +68,10 @@ const AuthLogin = () => {
   });
 
   useEffect(() => {
+    if (loading) {
+      setLoadingState(true);
+    }
+
     if (!loading && (user || error)) {
       let message;
       const type = error === undefined ? "success" : "error";
@@ -83,6 +90,25 @@ const AuthLogin = () => {
         message = "Login successful!";
       }
 
+      if (user) {
+        const options = {
+          url: `${process.env.NEXT_PUBLIC_USERS_ENDPOINT}`,
+          data: {
+            email: user.user.email,
+          },
+        };
+
+        const getUser = async () => {
+          const res = await axios.post(options.url, options.data);
+          const data = res.data;
+          if (data._id) {
+            setUserIdState(data._id);
+          }
+        };
+
+        getUser();
+      }
+
       if (type === "success") {
         formik.handleReset();
         setTimeout(() => {
@@ -91,7 +117,7 @@ const AuthLogin = () => {
       }
       onOpen(type, message);
     }
-  }, [user, error]);
+  }, [user, error, loading]);
 
   return (
     <AuthLayout type="Login" onSubmit={handleSubmit}>

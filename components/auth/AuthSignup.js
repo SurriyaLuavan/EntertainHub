@@ -8,15 +8,18 @@ import { useState } from "react";
 import { auth } from "@/lib/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
-import { useAlert } from "@/components/context/AlertProvider";
+import { useAlert } from "@/context/AlertProvider";
 import { CircularProgress } from "@mui/material";
 import { createUser } from "@/lib/db";
 import { formatUser } from "@/lib/db";
+import { useAuth } from "@/context/AuthProvider";
+import axios from "axios";
 
 const AuthSignup = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const { onOpen } = useAlert();
+  const { setLoadingState, setUserIdState } = useAuth();
   const [focus, setFocus] = useState({
     email: true,
     password: true,
@@ -68,6 +71,10 @@ const AuthSignup = () => {
   });
 
   useEffect(() => {
+    if (loading) {
+      setLoadingState(true);
+    }
+
     if (!loading && (user || error)) {
       const type = error === undefined ? "success" : "error";
       const message =
@@ -79,6 +86,22 @@ const AuthSignup = () => {
       if (!loading && !error && user) {
         const data = formatUser(user.user);
         createUser(user.user.uid, data);
+        const options = {
+          url: `${process.env.NEXT_PUBLIC_USERS_ENDPOINT}`,
+          data: {
+            email: user.user.email,
+          },
+        };
+
+        const createUserId = async () => {
+          const res = await axios.post(options.url, options.data);
+          const data = res.data;
+          if (data._id) {
+            setUserIdState(data._id);
+          }
+        };
+
+        createUserId();
       }
 
       if (type === "success") {
@@ -88,7 +111,7 @@ const AuthSignup = () => {
         }, 500);
       }
     }
-  }, [user, error]);
+  }, [user, error, loading]);
 
   return (
     <AuthLayout type="Sign Up" onSubmit={handleSubmit}>

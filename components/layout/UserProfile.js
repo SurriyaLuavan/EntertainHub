@@ -1,29 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../../context/AuthProvider";
 import styles from "/styles/UserProfile.module.css";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
-import { useAlert } from "../context/AlertProvider";
+import { useAlert } from "../../context/AlertProvider";
 import { useRouter } from "next/router";
+import { useBookmark } from "@/context/BookmarkProvider";
 
 const UserProfile = ({ showAccount, setShowAccount }) => {
-  const { userId } = useAuth();
+  const { setUserIdState, userId } = useAuth();
   const router = useRouter();
   const { onOpen } = useAlert();
-  const [signOut, loading, error] = useSignOut(auth);
+  const { setBookmark } = useBookmark();
+  const [signOut] = useSignOut(auth);
 
   async function handleLogout() {
     const success = await signOut();
     if (success) {
       onOpen("success", "Logout successful!");
+      setBookmark([]);
+      setUserIdState("");
       setTimeout(() => {
         router.push("/");
       }, 500);
     } else {
       onOpen("error", "Logout failed!");
     }
-    setShowAccount();
+    setShowAccount(false);
   }
 
   const imgSrc = userId ? "/assets/image-avatar.png" : "/assets/no-profile.png";

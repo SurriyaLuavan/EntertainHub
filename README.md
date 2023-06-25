@@ -2,7 +2,7 @@
 
 EntertainHub is a responsive web application that enables users to discover and explore movies and TV series. With detailed information about each show, users can create an account, bookmark their favorite shows, and search for content easily. Developed using Next.js, React, and Firebase, EntertainHub provides a seamless and secure experience for users. The intuitive user interface is designed with a modern and clean look, making it accessible to users of all ages and technical abilities. Formik and Yup ensure that user input is validated, while MUI provides customizable user interface components. EntertainHub is a powerful and user-friendly platform for anyone who wants to explore and find their next favorite show to watch.
 
-This is a solution to the [Entertainment web app](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+This is a solution to the [Entertainment web app](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X).
 
 ## **Features**
 

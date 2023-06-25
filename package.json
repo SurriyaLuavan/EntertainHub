@@ -1,6 +1,6 @@
 {
-  "name": "nextjs",
-  "version": "0.1.0",
+  "name": "entertainhub_client",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,17 +12,22 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.15",
+    "axios": "^1.4.0",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.4",
     "firebase": "^9.18.0",
     "formik": "^2.2.9",
+    "fs": "^0.0.1-security",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-indiana-drag-scroll": "^2.2.0",
+    "react-loader-spinner": "^5.3.4",
+    "react-loading-skeleton": "^3.3.1",
     "react-spinners": "^0.13.8",
     "react-uuid": "^2.0.0",
+    "swr": "^2.1.5",
     "yup": "^1.0.2"
   }
 }
